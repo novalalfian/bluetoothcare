@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sistem Pakar Diagnosis Bluetooth — Laptop Windows</title>
+  <meta name="description" content="Sistem pakar berbasis web untuk mendiagnosis gangguan konektivitas earphone, speaker, keyboard, dan mouse Bluetooth pada laptop Windows 10/11.">
+  <meta name="theme-color" content="#0b3b8c">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Lewati ke konten utama</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#beranda" aria-label="BluetoothCare — beranda">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 7l10 10-5 4V3l5 4L7 17"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <strong>BluetoothCare</strong>
+          <small>Sistem Pakar Diagnosis</small>
+        </span>
+      </a>
+
+      <nav class="main-nav" id="primary-nav" aria-label="Navigasi utama">
+        <a href="#beranda" data-route="beranda">Beranda</a>
+        <a href="#konsultasi" data-route="konsultasi">Konsultasi</a>
+        <a href="#pengetahuan" data-route="pengetahuan">Basis Pengetahuan</a>
+        <a href="#tentang" data-route="tentang">Tentang</a>
+      </nav>
+
+      <a class="header-cta" href="#konsultasi">Mulai <span aria-hidden="true">→</span></a>
+
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" aria-label="Buka menu navigasi">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div id="global-alert" class="global-alert" role="alert" hidden>
+    <div class="container">
+      <p id="global-alert-text"></p>
+      <button type="button" id="global-alert-close" aria-label="Tutup pesan">×</button>
+    </div>
+  </div>
+
+  <main id="main">
+    <!-- ================================================================== -->
+    <!-- BERANDA                                                            -->
+    <!-- ================================================================== -->
+    <section class="view" id="view-beranda" data-view="beranda">
+      <div class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> Sistem Pakar · Forward Chaining</p>
+            <h1>Kenali penyebab <span class="accent">Bluetooth</span> laptop yang bermasalah.</h1>
+            <p class="lede">
+              Jawab <span data-stat="facts">14</span> pertanyaan tentang earphone, speaker, keyboard, atau mouse Bluetooth Anda.
+              Sistem menelusuri <span data-stat="rules">19</span> aturan JIKA–MAKA, menyusun diagnosis berurutan prioritas,
+              dan menunjukkan alasan di balik setiap hasil.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#konsultasi">
+                Mulai konsultasi
+                <span class="btn-icon" aria-hidden="true">→</span>
+              </a>
+              <a class="btn btn-ghost" href="#pengetahuan">Pelajari basis pengetahuan</a>
+            </div>
+            <ul class="hero-stats" aria-label="Ringkasan basis pengetahuan">
+              <li><strong data-stat="facts">14</strong><span>fakta gejala</span></li>
+              <li><strong data-stat="rules">19</strong><span>aturan produksi</span></li>
+              <li><strong data-stat="final">7</strong><span>diagnosis akhir</span></li>
+            </ul>
+            <p class="hero-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              Berjalan lokal di komputer Anda. Tanpa unggahan data dan tanpa koneksi internet.
+            </p>
+          </div>
+
+          <div class="hero-visual" aria-hidden="true">
+            <div class="reason-card">
+              <div class="reason-bar">
+                <span class="window-dots"><i></i><i></i><i></i></span>
+                <span class="reason-title">Jejak penalaran</span>
+                <span class="live-chip"><span></span> contoh</span>
+              </div>
+              <div class="reason-body">
+                <div class="flow-node node-fact">
+                  <span class="node-code">F1</span>
+                  <span>Bluetooth laptop tidak bisa diaktifkan</span>
+                </div>
+                <div class="flow-link"><span>R1</span></div>
+                <div class="flow-node node-mid">
+                  <span class="node-code">K1</span>
+                  <span>Adaptor Bluetooth laptop tidak siap</span>
+                </div>
+                <div class="flow-link"><span>R8 · F4</span></div>
+                <div class="flow-node node-final">
+                  <span class="node-code">H1</span>
+                  <span>Driver atau layanan Bluetooth bermasalah</span>
+                </div>
+              </div>
+              <div class="reason-foot">
+                <span class="status-dot"></span>
+                <span>Keputusan dapat ditelusuri aturan per aturan</span>
+              </div>
+            </div>
+            <div class="floating-note">
+              <span class="floating-icon" aria-hidden="true">✓</span>
+              <span>Setiap diagnosis disertai langkah perbaikan</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="section" aria-labelledby="cara-kerja-title">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Cara kerja</p>
+            <h2 id="cara-kerja-title">Tiga langkah menuju diagnosis awal</h2>
+            <p>Sistem meniru cara teknisi menyaring gejala: dari kondisi laptop, perangkat, lalu lingkungan.</p>
+          </div>
+          <div class="steps-grid">
+            <article class="step-card">
+              <span class="step-number">01</span>
+              <h3>Jawab gejala</h3>
+              <p>14 pertanyaan Ya/Tidak dibagi ke dalam tiga kelompok: laptop &amp; sistem, perangkat Bluetooth, serta lingkungan &amp; sinyal.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">02</span>
+              <h3>Mesin menelusuri aturan</h3>
+              <p>Forward chaining mengevaluasi aturan secara berulang sampai tidak ada fakta baru. Operator AND dan OR didukung.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">03</span>
+              <h3>Baca hasil &amp; alasan</h3>
+              <p>Diagnosis tampil berurutan prioritas, lengkap dengan saran perbaikan, jejak iterasi, dan kalimat JIKA–MAKA.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-tint" aria-labelledby="cakupan-title">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Ruang lingkup</p>
+            <h2 id="cakupan-title">Apa yang dibantu — dan apa yang tidak</h2>
+          </div>
+          <div class="scope-grid">
+            <article class="scope-card scope-in">
+              <h3><span class="scope-icon" aria-hidden="true">✓</span> Yang dapat didiagnosis</h3>
+              <ul class="check-list">
+                <li>Perangkat Bluetooth tidak terdeteksi atau gagal pairing.</li>
+                <li>Perangkat pernah terpasang tetapi tidak tersambung otomatis.</li>
+                <li>Suara putus-putus, tidak keluar, atau output audio salah.</li>
+                <li>Keyboard atau mouse Bluetooth lambat merespons.</li>
+                <li>Masalah driver, layanan, manajemen daya, baterai, jarak, dan interferensi.</li>
+              </ul>
+            </article>
+            <article class="scope-card scope-out">
+              <h3><span class="scope-icon" aria-hidden="true">×</span> Batasan sistem</h3>
+              <ul class="x-list">
+                <li>Tidak memperbaiki kerusakan perangkat keras secara fisik.</li>
+                <li>Tidak mengubah pengaturan laptop secara otomatis.</li>
+                <li>Hanya untuk Windows 10/11 dan perangkat audio/input Bluetooth.</li>
+                <li>Bukan pengganti pemeriksaan teknisi atau servis resmi.</li>
+                <li>Tidak meminta dan tidak menyimpan data pribadi.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="kb-preview-title">
+        <div class="container kb-preview">
+          <div class="kb-preview-copy">
+            <p class="eyebrow">Transparansi</p>
+            <h2 id="kb-preview-title">Basis pengetahuan terbuka untuk diperiksa</h2>
+            <p>
+              Seluruh fakta, aturan, kesimpulan, sumber, dan skenario uji dapat dilihat langsung.
+              Basis aturan disimpan di <code>knowledge_base.json</code>, terpisah dari mesin inferensi,
+              sehingga dapat diperbarui tanpa mengubah kode program.
+            </p>
+            <ul class="mini-checks">
+              <li><span data-stat="facts">14</span> fakta · <span data-stat="intermediate">5</span> kesimpulan antara · <span data-stat="final">7</span> diagnosis akhir</li>
+              <li><span data-stat="rules">19</span> aturan produksi dengan AND/OR</li>
+              <li><span data-stat="scenarios">7</span> skenario uji dan fasilitas penjelasan per iterasi</li>
+            </ul>
+            <a class="btn btn-dark" href="#pengetahuan">Buka basis pengetahuan <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="kb-preview-panel">
+            <div class="kb-stat"><strong data-stat="intermediate">5</strong><span>Kesimpulan antara</span></div>
+            <div class="kb-stat"><strong data-stat="final">7</strong><span>Diagnosis akhir</span></div>
+            <div class="kb-stat"><strong data-stat="sources">4</strong><span>Sumber pengetahuan</span></div>
+            <div class="kb-stat"><strong>100%</strong><span>Target kesesuaian uji</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div class="container">
+          <div class="cta-band">
+            <div>
+              <h2>Siap mencari tahu penyebabnya?</h2>
+              <p>Luangkan sekitar dua menit. Tidak perlu memasang aplikasi atau membuat akun.</p>
+            </div>
+            <a class="btn btn-light" href="#konsultasi">Mulai konsultasi <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- KONSULTASI                                                         -->
+    <!-- ================================================================== -->
+    <section class="view page-section" id="view-konsultasi" data-view="konsultasi" hidden>
+      <div class="container">
+        <header class="page-head">
+          <p class="eyebrow">Konsultasi · <span data-stat="facts">14</span> pertanyaan</p>
+          <h1>Ceritakan gejala Bluetooth Anda</h1>
+          <p class="lede">Centang kondisi yang benar-benar Anda alami saat ini. Sistem akan mencocokkannya dengan pola aturan dan menampilkan diagnosis awal beserta alasannya.</p>
+        </header>
+
+        <div class="consult-layout">
+          <form id="consult-form" class="consult-form" novalidate>
+            <div class="progress-card">
+              <div class="progress-top">
+                <span>Kemajuan jawaban</span>
+                <strong id="progress-count">0 / 14</strong>
+              </div>
+              <div class="progress-track" role="progressbar" aria-label="Jumlah pertanyaan yang sudah dijawab" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0">
+                <span id="progress-bar"></span>
+              </div>
+              <p class="progress-hint">Semua pertanyaan wajib dijawab. Pilih <strong>Ya</strong> hanya bila gejala benar-benar terjadi.</p>
+            </div>
+
+            <div id="question-groups">
+              <div class="loading-block" role="status">
+                <span class="spinner" aria-hidden="true"></span>
+                Memuat pertanyaan dari basis pengetahuan…
+              </div>
+            </div>
+
+            <div id="form-error" class="alert alert-error" role="alert" tabindex="-1" hidden></div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-ghost" id="reset-form">Kosongkan jawaban</button>
+              <button type="submit" class="btn btn-primary" id="submit-answers" disabled>
+                Proses diagnosis
+                <span class="btn-icon" aria-hidden="true">→</span>
+              </button>
+            </div>
+            <p class="privacy-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              Tidak ada data pribadi yang diminta. Jawaban diproses di komputer ini dan hanya gejala yang dicatat pada log lokal.
+            </p>
+          </form>
+
+          <aside class="consult-aside" aria-label="Panduan konsultasi">
+            <div class="aside-card">
+              <h2>Sebelum mulai</h2>
+              <ul class="check-list">
+                <li>Dekatkan perangkat Bluetooth ke laptop.</li>
+                <li>Nyalakan perangkat dan periksa sisa baterai.</li>
+                <li>Catat apakah lampu indikator berkedip.</li>
+                <li>Siapkan nama perangkat bila perlu dirujuk di manual.</li>
+              </ul>
+            </div>
+            <div class="aside-card">
+              <h2>Arti jawaban</h2>
+              <dl class="definition-list">
+                <div><dt>Ya</dt><dd>Gejala terjadi saat ini atau dalam 24 jam terakhir.</dd></div>
+                <div><dt>Tidak</dt><dd>Gejala tidak Anda amati atau tidak yakin. Sistem tidak memaksa Anda menebak.</dd></div>
+              </dl>
+            </div>
+            <div class="aside-card aside-tip">
+              <h2>Istilah teknis</h2>
+              <p>Setiap pertanyaan memiliki keterangan singkat. Arahkan kursor ke teks bantuan atau baca di bawah pertanyaan.</p>
+              <a class="text-link" href="#tentang">Tentang sistem <span aria-hidden="true">→</span></a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- HASIL                                                              -->
+    <!-- ================================================================== -->
+    <section class="view page-section" id="view-hasil" data-view="hasil" hidden>
+      <div class="container">
+        <div id="result-empty" class="empty-state" hidden>
+          <span class="empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>
+          </span>
+          <h1>Belum ada hasil konsultasi</h1>
+          <p>Selesaikan 14 pertanyaan terlebih dahulu agar sistem dapat menelusuri aturan dan menyusun diagnosis.</p>
+          <a class="btn btn-primary" href="#konsultasi">Mulai konsultasi <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div id="result-body" hidden>
+          <header class="page-head result-head">
+            <p class="eyebrow">Hasil konsultasi</p>
+            <h1 id="result-title">Hasil diagnosis</h1>
+            <p class="lede" id="result-subtitle"></p>
+            <p class="result-time" id="result-time"></p>
+            <div class="result-actions no-print">
+              <button type="button" class="btn btn-primary" id="reconsult-top">Konsultasi ulang</button>
+              <button type="button" class="btn btn-ghost" id="download-result">Unduh .txt</button>
+              <button type="button" class="btn btn-ghost" id="print-result">Cetak / PDF</button>
+            </div>
+          </header>
+
+          <div id="result-summary"></div>
+
+          <section class="result-block" id="diagnosis-section" aria-labelledby="diagnosis-heading">
+            <div class="section-heading compact">
+              <p class="eyebrow">Kesimpulan</p>
+              <h2 id="diagnosis-heading">Diagnosis</h2>
+              <p id="diagnosis-caption">Diurutkan berdasarkan prioritas pemeriksaan. Prioritas hanya mengatur urutan tampil, bukan menghapus diagnosis lain.</p>
+            </div>
+            <div id="diagnosis-list"></div>
+          </section>
+
+          <section class="result-block" id="trace-section" aria-labelledby="trace-heading">
+            <div class="section-heading compact">
+              <p class="eyebrow">Fasilitas penjelasan</p>
+              <h2 id="trace-heading">Jejak penalaran</h2>
+              <p>Fakta masukan, aturan yang dijalankan, dan fakta turunan pada setiap iterasi.</p>
+            </div>
+            <div id="trace-content"></div>
+          </section>
+
+          <div class="result-footer-actions no-print">
+            <button type="button" class="btn btn-primary" id="reconsult-bottom">Konsultasi ulang</button>
+            <button type="button" class="btn btn-ghost" id="download-result-bottom">Unduh hasil (.txt)</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- BASIS PENGETAHUAN                                                  -->
+    <!-- ================================================================== -->
+    <section class="view page-section" id="view-pengetahuan" data-view="pengetahuan" hidden>
+      <div class="container">
+        <header class="page-head">
+          <p class="eyebrow">Transparansi basis pengetahuan</p>
+          <h1>Fakta, aturan, dan kesimpulan</h1>
+          <p class="lede">Halaman ini menampilkan isi <code>knowledge_base.json</code> yang dipakai mesin inferensi. Seluruh aturan dapat diperiksa dan diubah tanpa menyentuh kode program.</p>
+        </header>
+
+        <div id="kb-loading" class="loading-block" role="status">
+          <span class="spinner" aria-hidden="true"></span>
+          Memuat basis pengetahuan…
+        </div>
+
+        <div id="kb-content" hidden>
+          <div id="kb-compliance" class="compliance-grid" aria-label="Pemenuhan spesifikasi minimum"></div>
+
+          <div class="tabs" role="tablist" aria-label="Bagian basis pengetahuan">
+            <button type="button" class="tab-button is-active" id="tab-button-facts" role="tab" aria-selected="true" aria-controls="tab-facts" data-tab="facts">Fakta <span id="tab-count-facts">14</span></button>
+            <button type="button" class="tab-button" id="tab-button-rules" role="tab" aria-selected="false" aria-controls="tab-rules" data-tab="rules" tabindex="-1">Aturan <span id="tab-count-rules">19</span></button>
+            <button type="button" class="tab-button" id="tab-button-conclusions" role="tab" aria-selected="false" aria-controls="tab-conclusions" data-tab="conclusions" tabindex="-1">Kesimpulan <span id="tab-count-conclusions">12</span></button>
+            <button type="button" class="tab-button" id="tab-button-scenarios" role="tab" aria-selected="false" aria-controls="tab-scenarios" data-tab="scenarios" tabindex="-1">Skenario Uji <span id="tab-count-scenarios">7</span></button>
+            <button type="button" class="tab-button" id="tab-button-sources" role="tab" aria-selected="false" aria-controls="tab-sources" data-tab="sources" tabindex="-1">Sumber <span id="tab-count-sources">4</span></button>
+          </div>
+
+          <div class="tab-panel" id="tab-facts" role="tabpanel" aria-labelledby="tab-button-facts">
+            <div class="panel-head">
+              <h2>Fakta dan gejala</h2>
+              <p>Setiap fakta dijawab Ya atau Tidak oleh pengguna.</p>
+            </div>
+            <div id="facts-table"></div>
+          </div>
+
+          <div class="tab-panel" id="tab-rules" role="tabpanel" aria-labelledby="tab-button-rules" hidden>
+            <div class="panel-head">
+              <h2>Aturan produksi</h2>
+              <p>Format JIKA–MAKA dengan dukungan operator AND dan OR bersarang.</p>
+            </div>
+            <div id="rules-table"></div>
+          </div>
+
+          <div class="tab-panel" id="tab-conclusions" role="tabpanel" aria-labelledby="tab-button-conclusions" hidden>
+            <div class="panel-head">
+              <h2>Kesimpulan antara dan diagnosis akhir</h2>
+              <p>Kesimpulan antara (K) menghubungkan gejala dengan diagnosis akhir (H).</p>
+            </div>
+            <div id="conclusions-content"></div>
+          </div>
+
+          <div class="tab-panel" id="tab-scenarios" role="tabpanel" aria-labelledby="tab-button-scenarios" hidden>
+            <div class="panel-head">
+              <h2>Skenario pengujian</h2>
+              <p>Tujuh skenario acuan dari PRD beserta aturan yang seharusnya berjalan.</p>
+            </div>
+            <div id="scenarios-table"></div>
+            <div class="test-formula">
+              <strong>Rumus kesesuaian:</strong>
+              <span>(jumlah skenario sesuai ÷ jumlah seluruh skenario) × 100%</span>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="tab-sources" role="tabpanel" aria-labelledby="tab-button-sources" hidden>
+            <div class="panel-head">
+              <h2>Sumber pengetahuan</h2>
+              <p>Akuisisi pengetahuan dari dokumentasi, manual perangkat, wawancara, dan spesifikasi Bluetooth.</p>
+            </div>
+            <div id="sources-content"></div>
+          </div>
+
+          <p class="source-note">
+            Dimuat dari <code>knowledge_base.json</code> melalui endpoint <code>GET /api/knowledge</code>.
+            Perubahan aturan langsung terbaca setelah halaman dimuat ulang.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- TENTANG                                                            -->
+    <!-- ================================================================== -->
+    <section class="view page-section" id="view-tentang" data-view="tentang" hidden>
+      <div class="container">
+        <header class="page-head">
+          <p class="eyebrow">Tentang proyek</p>
+          <h1>Sistem pakar untuk masalah Bluetooth sehari-hari</h1>
+          <p class="lede">Proyek UTS mata kuliah Sistem Pakar: mengubah pengetahuan teknisi menjadi aturan yang dapat diperiksa, dijelaskan, dan diuji.</p>
+        </header>
+
+        <div class="about-layout">
+          <article class="prose">
+            <h2>Latar belakang</h2>
+            <p>Pengguna awam sulit membedakan apakah masalah Bluetooth berasal dari laptop (driver, layanan, manajemen daya), perangkat (mode pairing, baterai, koneksi ke perangkat lain), atau lingkungan (jarak dan interferensi). Panduan di internet bersifat umum dan tidak menyaring berdasarkan gejala. Sistem ini menyusun pengetahuan tersebut menjadi aturan JIKA–MAKA yang dapat ditelusuri.</p>
+
+            <h2>Metode inferensi</h2>
+            <p><strong>Forward chaining</strong> dipilih karena pengguna mulai dari gejala yang diamati, lalu sistem menurunkan kesimpulan antara dan diagnosis akhir. Setiap siklus mengevaluasi aturan yang belum berjalan terhadap memori kerja, menjalankan seluruh aturan yang aktif, menambahkan fakta baru, lalu mengulang sampai tidak ada fakta baru.</p>
+            <ol class="method-steps">
+              <li><strong>Memori kerja awal</strong> berisi fakta yang dijawab “Ya”.</li>
+              <li><strong>Evaluasi aturan</strong> mencocokkan premis AND/OR dengan memori kerja.</li>
+              <li><strong>Jalankan aturan</strong> dan catat kesimpulan baru pada jejak iterasi.</li>
+              <li><strong>Berhenti</strong> ketika tidak ada aturan baru yang aktif, lalu urutkan diagnosis berdasarkan prioritas.</li>
+            </ol>
+
+            <h2>Fasilitas penjelasan</h2>
+            <p>Halaman hasil menampilkan fakta masukan, tabel iterasi (aturan, premis, kesimpulan, status baru), fakta turunan K dan H, serta alasan setiap diagnosis dalam kalimat JIKA–MAKA. Pohon alasan dapat dibuka pada setiap kartu diagnosis.</p>
+
+            <h2>Batasan dan etika</h2>
+            <p>Sistem hanya memberikan diagnosis awal untuk Windows 10/11. Sistem tidak memperbaiki perangkat keras, tidak mengubah pengaturan secara otomatis, dan tidak menggantikan teknisi. Aplikasi berjalan di localhost, tidak meminta data pribadi, dan hanya mencatat gejala serta hasil inferensi ke log lokal untuk keperluan pengujian.</p>
+
+            <h2>Sumber dan validasi</h2>
+            <p>Aturan disusun dari dokumentasi Microsoft Support, manual perangkat, wawancara teknisi, dan spesifikasi Bluetooth SIG. Rincian sumber ada pada tab <a href="#pengetahuan" data-open-tab="sources">Sumber</a> di halaman basis pengetahuan. Isi identitas sumber S2 dan S3 perlu dilengkapi sebelum pengumpulan.</p>
+
+            <h2>Pernyataan penggunaan AI</h2>
+            <p>Struktur dokumen dan sebagian kode dibantu oleh AI. Penulis bertanggung jawab memvalidasi seluruh fakta, aturan, dan kode, serta mencantumkan pernyataan penggunaan AI pada laporan akhir sesuai ketentuan mata kuliah.</p>
+          </article>
+
+          <aside class="about-aside">
+            <div class="aside-card info-card">
+              <h2>Informasi proyek</h2>
+              <dl class="info-list">
+                <div><dt>Mata kuliah</dt><dd>Sistem Pakar (TI22604)</dd></div>
+                <div><dt>Penilaian</dt><dd>UTS Semester Ganjil 2026/2027</dd></div>
+                <div><dt>Metode</dt><dd>Forward Chaining</dd></div>
+                <div><dt>Platform</dt><dd>Windows 10/11 · localhost</dd></div>
+                <div><dt>Versi</dt><dd>2.0</dd></div>
+                <div><dt>Penulis</dt><dd>(isi NIM dan nama)</dd></div>
+              </dl>
+            </div>
+            <div class="aside-card">
+              <h2>Spesifikasi minimum</h2>
+              <ul class="check-list">
+                <li><span data-stat="facts">14</span> fakta (target 10+)</li>
+                <li><span data-stat="final">7</span> diagnosis akhir (target 5+)</li>
+                <li><span data-stat="intermediate">5</span> kesimpulan antara (target 3+)</li>
+                <li><span data-stat="rules">19</span> aturan dengan AND/OR (target 15+)</li>
+                <li><span data-stat="scenarios">7</span> skenario uji (target 5+)</li>
+              </ul>
+              <a class="text-link" href="#pengetahuan">Lihat rincian <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="aside-card aside-tip">
+              <h2>Disclaimer</h2>
+              <p>Hasil sistem adalah diagnosis awal, bukan pengganti pemeriksaan teknisi. Tidak ada keputusan medis, hukum, keuangan, atau keselamatan yang dibuat.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#beranda" aria-label="BluetoothCare — beranda">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10-5 4V3l5 4L7 17"/></svg>
+          </span>
+          <span class="brand-text"><strong>BluetoothCare</strong><small>Sistem Pakar Diagnosis</small></span>
+        </a>
+        <p>Diagnosis awal gangguan konektivitas perangkat Bluetooth pada laptop Windows. Berjalan lokal, tanpa data pribadi.</p>
+      </div>
+      <div class="footer-links">
+        <h2>Navigasi</h2>
+        <a href="#beranda">Beranda</a>
+        <a href="#konsultasi">Konsultasi</a>
+        <a href="#pengetahuan">Basis pengetahuan</a>
+        <a href="#tentang">Tentang</a>
+      </div>
+      <div class="footer-links">
+        <h2>Basis pengetahuan</h2>
+        <a href="#pengetahuan" data-open-tab="facts">14 fakta gejala</a>
+        <a href="#pengetahuan" data-open-tab="rules">19 aturan produksi</a>
+        <a href="#pengetahuan" data-open-tab="conclusions">12 kesimpulan</a>
+        <a href="#pengetahuan" data-open-tab="scenarios">7 skenario uji</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 BluetoothCare · Proyek UTS Sistem Pakar TI22604</p>
+      <p>Hasil bersifat diagnosis awal. Bukan pengganti servis resmi.</p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <noscript>
+    <div class="noscript">Aplikasi ini memerlukan JavaScript untuk menampilkan pertanyaan dan menjalankan konsultasi. Aktifkan JavaScript di browser Anda.</div>
+  </noscript>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>

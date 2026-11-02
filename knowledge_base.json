@@ -1,0 +1,470 @@
+{
+  "meta": {
+    "title": "Sistem Pakar Diagnosis Gangguan Konektivitas Perangkat Bluetooth pada Laptop",
+    "short_title": "BluetoothCare",
+    "subtitle": "Diagnosis awal gangguan earphone, speaker, dan keyboard Bluetooth di Windows 10/11",
+    "course": "Sistem Pakar (TI22604) — UTS Semester Ganjil 2026/2027",
+    "author": "(isi NIM dan nama)",
+    "version": "2.0",
+    "updated": "2026-11-02",
+    "method": "Forward Chaining",
+    "platform": "Windows 10/11",
+    "disclaimer": "Hasil sistem adalah diagnosis awal, bukan pengganti pemeriksaan teknisi. Sistem tidak mengubah pengaturan laptop secara otomatis dan tidak mengumpulkan data pribadi.",
+    "description": "Pengguna menjawab 14 pertanyaan Ya/Tidak. Mesin inferensi menelusuri 19 aturan JIKA-MAKA secara berulang sampai tidak ada fakta baru, lalu menampilkan diagnosis berurutan prioritas beserta langkah perbaikan dan jejak penalaran.",
+    "groups": [
+      {
+        "id": "laptop",
+        "label": "Laptop & sistem",
+        "description": "Kondisi adaptor, driver, pengaturan daya, dan keluaran audio di laptop."
+      },
+      {
+        "id": "perangkat",
+        "label": "Perangkat Bluetooth",
+        "description": "Kondisi earphone, speaker, keyboard, atau mouse yang akan disambungkan."
+      },
+      {
+        "id": "lingkungan",
+        "label": "Lingkungan & sinyal",
+        "description": "Jarak, penghalang, dan gangguan sinyal nirkabel di sekitar perangkat."
+      }
+    ],
+    "test_scenarios": [
+      {
+        "no": 1,
+        "facts": ["F1", "F14"],
+        "rules": ["R1", "R9"],
+        "result": "H1",
+        "note": "Adaptor tidak siap dan pairing ulang tetap gagal."
+      },
+      {
+        "no": 2,
+        "facts": ["F2", "F13"],
+        "rules": ["R3", "R4", "R10"],
+        "result": "H2",
+        "note": "Perangkat tidak terdeteksi dan belum masuk mode pairing."
+      },
+      {
+        "no": 3,
+        "facts": ["F5", "F6"],
+        "rules": ["R5", "R12"],
+        "result": "H3",
+        "note": "Suara putus-putus dengan jarak atau interferensi."
+      },
+      {
+        "no": 4,
+        "facts": ["F8"],
+        "rules": ["R6", "R15"],
+        "result": "H5",
+        "note": "Perangkat tersambung tetapi output audio belum diarahkan."
+      },
+      {
+        "no": 5,
+        "facts": ["F3", "F4"],
+        "rules": ["R7", "R16"],
+        "result": "H6",
+        "note": "Perangkat pernah terpasang dan pairing gagal."
+      },
+      {
+        "no": 6,
+        "facts": ["F7", "F11"],
+        "rules": ["R14"],
+        "result": "H4",
+        "note": "Baterai lemah disertai input keyboard/mouse lambat."
+      },
+      {
+        "no": 7,
+        "facts": ["F7"],
+        "rules": [],
+        "result": null,
+        "note": "Hanya satu gejala, belum membentuk pola diagnosis."
+      }
+    ]
+  },
+  "facts": [
+    {
+      "id": "F1",
+      "text": "Pengaturan atau tombol Bluetooth di laptop tidak muncul atau tidak bisa diaktifkan",
+      "group": "laptop",
+      "hint": "Contoh: ikon Bluetooth hilang dari pengaturan, atau tombolnya abu-abu dan tidak bisa digeser ke Aktif.",
+      "solo_advice": "Aktifkan Bluetooth lewat Pengaturan > Bluetooth & perangkat. Jika tombolnya tidak tersedia, periksa driver adaptor di Device Manager."
+    },
+    {
+      "id": "F2",
+      "text": "Perangkat tidak muncul di daftar pencarian laptop",
+      "group": "perangkat",
+      "hint": "Perangkat tidak muncul sama sekali saat laptop sedang mencari perangkat Bluetooth baru.",
+      "solo_advice": "Pastikan perangkat berada dalam mode pairing (lampu berkedip cepat) dan berada dekat laptop saat pencarian dilakukan."
+    },
+    {
+      "id": "F3",
+      "text": "Perangkat pernah terpasang tetapi tidak tersambung otomatis",
+      "group": "perangkat",
+      "hint": "Perangkat sudah pernah dipasangkan, tetapi harus disambungkan manual setiap kali dipakai.",
+      "solo_advice": "Coba sambungkan manual dari daftar perangkat Bluetooth. Jika tetap gagal, hapus perangkat lalu pasangkan ulang."
+    },
+    {
+      "id": "F4",
+      "text": "Pairing gagal atau terus meminta PIN/passkey",
+      "group": "perangkat",
+      "hint": "Muncul permintaan PIN/passkey berulang, atau proses pairing berhenti sendiri.",
+      "solo_advice": "Hapus data pairing lama di Windows, lalu pasangkan ulang. Untuk keyboard, masukkan PIN melalui keyboard tersebut lalu tekan Enter."
+    },
+    {
+      "id": "F5",
+      "text": "Suara putus-putus atau patah-patah",
+      "group": "lingkungan",
+      "hint": "Audio terputus beberapa detik secara berkala, terutama saat menjauh dari laptop.",
+      "solo_advice": "Dekatkan perangkat ke laptop, jauhkan dari router Wi-Fi atau perangkat nirkabel lain, dan uji ulang."
+    },
+    {
+      "id": "F6",
+      "text": "Jarak lebih dari 10 m, ada penghalang, atau banyak perangkat nirkabel di sekitar",
+      "group": "lingkungan",
+      "hint": "Ada dinding, tubuh, atau banyak perangkat Wi-Fi/Bluetooth di sekitar laptop dan perangkat.",
+      "solo_advice": "Dekatkan perangkat ke laptop tanpa penghalang, lalu kurangi jumlah perangkat nirkabel yang aktif di sekitar."
+    },
+    {
+      "id": "F7",
+      "text": "Baterai perangkat di bawah 20%",
+      "group": "perangkat",
+      "hint": "Cek indikator baterai di aplikasi perangkat atau coba isi ulang perangkat.",
+      "solo_advice": "Isi ulang baterai perangkat hingga di atas 20% atau sampai indikator penuh, lalu sambungkan kembali."
+    },
+    {
+      "id": "F8",
+      "text": "Perangkat tersambung tetapi tidak ada suara",
+      "group": "laptop",
+      "hint": "Windows menunjukkan perangkat tersambung, tetapi audio tetap keluar dari speaker laptop.",
+      "solo_advice": "Klik ikon Speaker di taskbar, lalu pilih perangkat Bluetooth sebagai output audio. Periksa juga volume dan status mute."
+    },
+    {
+      "id": "F9",
+      "text": "Perangkat sedang tersambung ke perangkat lain",
+      "group": "perangkat",
+      "hint": "Misalnya earphone masih tersambung ke ponsel saat akan dipakai di laptop.",
+      "solo_advice": "Putuskan koneksi perangkat dari HP, tablet, atau komputer lain sebelum menyambungkannya ke laptop."
+    },
+    {
+      "id": "F10",
+      "text": "Driver Bluetooth bertanda peringatan atau baru diperbarui",
+      "group": "laptop",
+      "hint": "Lihat Device Manager > Bluetooth: ada tanda seru kuning, atau driver baru saja diperbarui.",
+      "solo_advice": "Periksa driver di Device Manager. Jika ada tanda peringatan, perbarui atau instal ulang driver, lalu restart laptop."
+    },
+    {
+      "id": "F11",
+      "text": "Keyboard atau mouse Bluetooth lambat merespons",
+      "group": "perangkat",
+      "hint": "Ketikan terasa tertunda atau gerakan kursor melompat saat memakai perangkat Bluetooth.",
+      "solo_advice": "Periksa baterai perangkat dan jarak ke laptop. Input lag sering muncul saat daya lemah atau sinyal terganggu."
+    },
+    {
+      "id": "F12",
+      "text": "Mode hemat daya laptop aktif",
+      "group": "laptop",
+      "hint": "Mode Battery saver aktif, atau laptop menggunakan profil daya hemat.",
+      "solo_advice": "Ubah profil daya ke Balanced atau High performance, lalu uji kembali koneksi Bluetooth."
+    },
+    {
+      "id": "F13",
+      "text": "Lampu indikator perangkat tidak berkedip (belum mode pairing)",
+      "group": "perangkat",
+      "hint": "Lampu perangkat mati atau menyala tetap, bukan berkedip cepat sebagai tanda mode pairing.",
+      "solo_advice": "Tekan dan tahan tombol pairing sesuai manual perangkat (umumnya 3–5 detik) sampai lampu berkedip cepat."
+    },
+    {
+      "id": "F14",
+      "text": "Perangkat sudah dihapus dan dipasang ulang, masalah tetap ada",
+      "group": "perangkat",
+      "hint": "Sudah Remove device dan pairing ulang, tetapi gejala yang sama tetap muncul.",
+      "solo_advice": "Coba perangkat pada laptop lain. Jika tetap bermasalah, kemungkinan ada pada perangkat; jika normal, fokus pada driver atau adaptor laptop."
+    }
+  ],
+  "conclusions": [
+    {
+      "id": "K1",
+      "type": "intermediate",
+      "text": "Adaptor Bluetooth laptop tidak siap",
+      "summary": "Ada indikasi masalah pada adaptor, driver, atau layanan Bluetooth di sisi laptop.",
+      "priority": null,
+      "advice": []
+    },
+    {
+      "id": "K2",
+      "type": "intermediate",
+      "text": "Perangkat belum siap dipasangkan",
+      "summary": "Perangkat belum berada dalam mode pairing, tidak terdeteksi, atau sedang terhubung ke perangkat lain.",
+      "priority": null,
+      "advice": []
+    },
+    {
+      "id": "K3",
+      "type": "intermediate",
+      "text": "Sinyal radio terganggu",
+      "summary": "Jarak, penghalang, atau kepadatan perangkat nirkabel mengganggu koneksi.",
+      "priority": null,
+      "advice": []
+    },
+    {
+      "id": "K4",
+      "type": "intermediate",
+      "text": "Pengaturan keluaran audio kemungkinan salah",
+      "summary": "Perangkat tersambung, tetapi Windows masih mengarahkan audio ke keluaran lain.",
+      "priority": null,
+      "advice": []
+    },
+    {
+      "id": "K5",
+      "type": "intermediate",
+      "text": "Data pairing lama berpotensi bermasalah",
+      "summary": "Data pairing tersimpan tetapi tidak lagi cocok dengan kondisi perangkat.",
+      "priority": null,
+      "advice": []
+    },
+    {
+      "id": "H1",
+      "type": "final",
+      "text": "Driver atau layanan Bluetooth bermasalah",
+      "summary": "Adaptor Bluetooth terdeteksi bermasalah dan gejalanya tetap muncul setelah upaya pairing.",
+      "priority": 1,
+      "advice": [
+        "Buka Device Manager, cari bagian Bluetooth, klik kanan adaptor, lalu pilih Update driver.",
+        "Jika driver sudah terbaru tetapi masalah tetap ada, pilih Uninstall device, restart laptop, lalu biarkan Windows memasang ulang driver.",
+        "Tekan Win + R, ketik services.msc, cari Bluetooth Support Service, lalu pastikan statusnya Running dan Startup type Automatic.",
+        "Restart laptop, aktifkan Bluetooth, dan lakukan pairing ulang."
+      ]
+    },
+    {
+      "id": "H2",
+      "type": "final",
+      "text": "Perangkat belum mode pairing atau tersambung ke perangkat lain",
+      "summary": "Laptop tidak menemukan perangkat karena perangkat belum siap dipasangkan atau sedang dipakai perangkat lain.",
+      "priority": 2,
+      "advice": [
+        "Aktifkan mode pairing sesuai manual perangkat, umumnya dengan menekan dan menahan tombol daya 3–5 detik sampai lampu berkedip cepat.",
+        "Putuskan koneksi perangkat dari HP, tablet, atau komputer lain yang mungkin sedang terhubung.",
+        "Di Windows, buka Pengaturan > Bluetooth & perangkat > Add device > Bluetooth, lalu pilih perangkat.",
+        "Pastikan perangkat berada dekat laptop dan baterainya cukup saat proses pairing."
+      ]
+    },
+    {
+      "id": "H6",
+      "type": "final",
+      "text": "Data pairing lama rusak",
+      "summary": "Data pairing yang tersimpan tidak lagi cocok sehingga pairing gagal atau perangkat tidak tersambung normal.",
+      "priority": 3,
+      "advice": [
+        "Buka Pengaturan > Bluetooth & perangkat, pilih perangkat bermasalah, lalu klik Remove device.",
+        "Restart laptop untuk membersihkan sisa koneksi lama.",
+        "Pasangkan ulang perangkat dari awal dan masukkan PIN bila diminta.",
+        "Jika masih gagal, coba pairing perangkat ke laptop lain untuk memastikan kondisi perangkat."
+      ]
+    },
+    {
+      "id": "H7",
+      "type": "final",
+      "text": "Manajemen daya mematikan adaptor",
+      "summary": "Windows atau profil hemat daya mematikan adaptor Bluetooth untuk menghemat baterai.",
+      "priority": 4,
+      "advice": [
+        "Buka Device Manager > Bluetooth, klik kanan adaptor, lalu pilih Properties > Power Management.",
+        "Hapus centang Allow the computer to turn off this device to save power, lalu klik OK.",
+        "Buka Power Options dan pilih profil Balanced atau High performance saat mendiagnosis.",
+        "Uji kembali setelah laptop bangun dari sleep atau hibernasi."
+      ]
+    },
+    {
+      "id": "H4",
+      "type": "final",
+      "text": "Baterai perangkat lemah",
+      "summary": "Daya perangkat di bawah 20% sehingga koneksi atau respons input tidak stabil.",
+      "priority": 5,
+      "advice": [
+        "Isi ulang perangkat minimal 30 menit atau sampai indikator baterai penuh.",
+        "Ganti baterai jika perangkat memakai baterai AAA/AA.",
+        "Hindari memakai perangkat saat baterai berada di bawah 20%.",
+        "Setelah terisi, sambungkan ulang dan uji suara atau respons input."
+      ]
+    },
+    {
+      "id": "H3",
+      "type": "final",
+      "text": "Interferensi atau jarak/penghalang",
+      "summary": "Sinyal Bluetooth melemah karena jarak, penghalang, atau banyak perangkat nirkabel di sekitar.",
+      "priority": 6,
+      "advice": [
+        "Dekatkan perangkat ke laptop, idealnya kurang dari 10 meter tanpa penghalang.",
+        "Jauhkan laptop dan perangkat dari router Wi-Fi, microwave, serta perangkat nirkabel lain.",
+        "Jika memakai receiver USB, gunakan kabel ekstensi agar receiver menjauh dari bodi laptop.",
+        "Uji koneksi di lokasi lain untuk membandingkan tingkat gangguan."
+      ]
+    },
+    {
+      "id": "H5",
+      "type": "final",
+      "text": "Output audio default belum diarahkan ke perangkat",
+      "summary": "Perangkat sudah tersambung, tetapi Windows belum memilihnya sebagai keluaran audio.",
+      "priority": 7,
+      "advice": [
+        "Klik ikon Speaker di taskbar, lalu pilih perangkat Bluetooth sebagai output audio.",
+        "Buka Pengaturan > Sistem > Suara > Output, lalu pilih perangkat Bluetooth.",
+        "Klik kanan ikon Volume > Open Volume Mixer, pastikan perangkat dan aplikasi tidak dalam keadaan mute.",
+        "Di aplikasi seperti Zoom, Teams, atau browser, pilih juga perangkat output yang benar."
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "R1",
+      "if": "F1",
+      "then": "K1",
+      "source": "S1"
+    },
+    {
+      "id": "R2",
+      "if": "F10",
+      "then": "K1",
+      "source": "S1"
+    },
+    {
+      "id": "R3",
+      "if": { "or": ["F13", "F9"] },
+      "then": "K2",
+      "source": "S2"
+    },
+    {
+      "id": "R4",
+      "if": "F2",
+      "then": "K2",
+      "source": "S2"
+    },
+    {
+      "id": "R5",
+      "if": "F6",
+      "then": "K3",
+      "source": "S4"
+    },
+    {
+      "id": "R6",
+      "if": "F8",
+      "then": "K4",
+      "source": "S1"
+    },
+    {
+      "id": "R7",
+      "if": "F3",
+      "then": "K5",
+      "source": "S2"
+    },
+    {
+      "id": "R8",
+      "if": { "and": ["K1", "F4"] },
+      "then": "H1",
+      "source": "S1"
+    },
+    {
+      "id": "R9",
+      "if": { "and": ["K1", "F14"] },
+      "then": "H1",
+      "source": "S1"
+    },
+    {
+      "id": "R10",
+      "if": { "and": ["K2", "F2"] },
+      "then": "H2",
+      "source": "S2"
+    },
+    {
+      "id": "R11",
+      "if": { "and": ["K2", "F4"] },
+      "then": "H2",
+      "source": "S2"
+    },
+    {
+      "id": "R12",
+      "if": { "and": ["K3", "F5"] },
+      "then": "H3",
+      "source": "S4"
+    },
+    {
+      "id": "R13",
+      "if": { "and": ["K3", "F11"] },
+      "then": "H3",
+      "source": "S4"
+    },
+    {
+      "id": "R14",
+      "if": { "and": ["F7", { "or": ["F5", "F11"] }] },
+      "then": "H4",
+      "source": "S2"
+    },
+    {
+      "id": "R15",
+      "if": "K4",
+      "then": "H5",
+      "source": "S1"
+    },
+    {
+      "id": "R16",
+      "if": { "and": ["K5", "F4"] },
+      "then": "H6",
+      "source": "S2"
+    },
+    {
+      "id": "R17",
+      "if": { "and": ["K5", "F8"] },
+      "then": "H6",
+      "source": "S2"
+    },
+    {
+      "id": "R18",
+      "if": { "and": ["F12", "F3"] },
+      "then": "H7",
+      "source": "S1"
+    },
+    {
+      "id": "R19",
+      "if": { "and": ["F12", "F5"] },
+      "then": "H7",
+      "source": "S1"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Fix Bluetooth problems in Windows",
+      "publisher": "Microsoft Support",
+      "url": "https://support.microsoft.com/en-us/windows/hardware/bluetooth/fix-bluetooth-problems-in-windows",
+      "accessed": "2026-11-02",
+      "status": "terverifikasi",
+      "contribution": "Gejala dan langkah perbaikan driver, layanan Bluetooth, pengaturan daya, serta output audio."
+    },
+    {
+      "id": "S2",
+      "title": "Buku manual perangkat Bluetooth (earphone, speaker, keyboard)",
+      "publisher": "Manual pabrikan — isi merek dan model",
+      "url": "",
+      "accessed": "",
+      "status": "perlu_dilengkapi",
+      "contribution": "Mode pairing, arti indikator lampu, perilaku baterai, dan prosedur pairing ulang."
+    },
+    {
+      "id": "S3",
+      "title": "Wawancara teknisi komputer",
+      "publisher": "Isi nama dan tanggal wawancara",
+      "url": "",
+      "accessed": "",
+      "status": "perlu_dilengkapi",
+      "contribution": "Validasi aturan, urutan prioritas diagnosis, dan penyesuaian bahasa untuk pengguna awam."
+    },
+    {
+      "id": "S4",
+      "title": "Bluetooth Core Specification — operasi pita 2,4 GHz",
+      "publisher": "Bluetooth SIG",
+      "url": "https://www.bluetooth.com/specifications/specs/",
+      "accessed": "2026-11-02",
+      "status": "terverifikasi",
+      "contribution": "Dasar interferensi pita 2,4 GHz, jarak jangkauan, dan pengaruh penghalang."
+    }
+  ]
+}
