@@ -64,6 +64,11 @@ Spesifikasi minimum soal UTS:
 │   ├── PEMETAAN_PRD.md     # Keterlacakan kebutuhan PRD ke kode
 │   └── HASIL_UJI.md        # Tabel hasil pengujian dan cara memverifikasi
 ├── logs/                   # Dibuat otomatis saat konsultasi pertama
+├── requirements.txt        # Kosong: hanya pustaka standar Python
+├── Dockerfile              # Image untuk deploy online
+├── render.yaml             # Blueprint Render
+├── Procfile                # Alternatif Railway/Heroku-like
+├── DEPLOY.md               # Panduan export dan deploy
 └── README.md
 ```
 
@@ -100,6 +105,23 @@ python app.py --verbose            # tampilkan semua log HTTP
 Hentikan server dengan `Ctrl+C`.
 
 > Jika port 8000 sedang dipakai, aplikasi mencoba port 8001–8019 dan menampilkan URL yang benar di konsol.
+
+### Menjalankan online
+
+Aplikasi ini membutuhkan hosting yang dapat menjalankan proses Python, bukan hosting statis. Konfigurasi siap pakai untuk **Render** (Docker), **Railway**, dan **VPS** tersedia di [`DEPLOY.md`](DEPLOY.md).
+
+Ringkasan perintah untuk hosting yang mendukung start command:
+
+```bash
+python app.py --host 0.0.0.0 --port $PORT --no-browser --no-log
+```
+
+- `--host 0.0.0.0` agar dapat diakses dari luar container,
+- `--port $PORT` mengikuti port dari platform,
+- `--no-browser` karena server online tidak perlu membuka browser,
+- `--no-log` karena filesystem hosting gratis bersifat sementara.
+
+Untuk demo cepat tanpa deploy, lihat bagian Cloudflare Tunnel/ngrok di `DEPLOY.md`.
 
 ---
 
@@ -335,7 +357,7 @@ Kode inferensi tidak perlu diubah (FR-04). Jika menambah fakta, form, progres, d
 
 ## 10. Keamanan dan privasi
 
-- Server hanya bind ke `127.0.0.1` secara default.
+- Server hanya bind ke `127.0.0.1` secara default; saat online gunakan `--host 0.0.0.0` dan `--no-log`.
 - Tidak ada data pribadi yang diminta.
 - Log konsultasi (`logs/konsultasi.jsonl`) hanya menyimpan waktu, fakta “Ya”, diagnosis, aturan, iterasi, dan waktu inferensi.
 - Header respons mencakup CSP, `X-Content-Type-Options`, dan `Referrer-Policy`.

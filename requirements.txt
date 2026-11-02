@@ -1,0 +1,2 @@
+# Aplikasi ini hanya memakai pustaka standar Python.
+# Tidak ada dependensi eksternal yang perlu dipasang.

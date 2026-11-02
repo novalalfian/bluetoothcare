@@ -1,0 +1,15 @@
+.git
+.gitignore
+.gitattributes
+__pycache__
+*.py[cod]
+.venv
+venv
+logs
+tests
+docs
+*.pdf
+*.zip
+.env
+.DS_Store
+Thumbs.db
