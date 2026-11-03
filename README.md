@@ -1,6 +1,6 @@
 # BluetoothCare — Sistem Pakar Diagnosis Konektivitas Bluetooth pada Laptop
 
-Aplikasi web lokal untuk mendiagnosis awal gangguan konektivitas **earphone, speaker, keyboard, dan mouse Bluetooth** pada laptop **Windows 10/11**. Pengguna menjawab 14 pertanyaan Ya/Tidak, mesin **forward chaining** menelusuri 19 aturan JIKA–MAKA, lalu sistem menampilkan diagnosis berurutan prioritas, langkah perbaikan, dan **jejak penalaran per iterasi**.
+Aplikasi web lokal untuk mendiagnosis awal gangguan konektivitas **earphone, speaker, keyboard, dan mouse Bluetooth** pada laptop **Windows 10/11**. Pengguna menjawab 20 pertanyaan Ya/Tidak, mesin **forward chaining** menelusuri 31 aturan JIKA–MAKA, lalu sistem menampilkan diagnosis berurutan prioritas, langkah perbaikan, dan **jejak penalaran per iterasi**.
 
 Proyek ini disusun mengacu pada PRD *Sistem Pakar Diagnosis Gangguan Konektivitas Perangkat Bluetooth (Earphone, Speaker, Keyboard) pada Laptop* versi 2.0 untuk UTS Sistem Pakar (TI22604).
 
@@ -11,12 +11,12 @@ Proyek ini disusun mengacu pada PRD *Sistem Pakar Diagnosis Gangguan Konektivita
 | Kebutuhan PRD | Status | Keterangan |
 | --- | --- | --- |
 | FR-01 Halaman pembuka | ✅ | Beranda dengan judul, deskripsi, batasan, dan tombol Mulai Konsultasi |
-| FR-02 Form 14 fakta Ya/Tidak, 3 kelompok | ✅ | Kelompok Laptop & sistem, Perangkat Bluetooth, Lingkungan & sinyal |
+| FR-02 Form 20 fakta Ya/Tidak, 3 kelompok | ✅ | Kelompok Laptop & sistem, Perangkat Bluetooth, Lingkungan & sinyal |
 | FR-03 Validasi masukan | ✅ | Semua pertanyaan wajib dijawab; pesan menyebut kode yang belum dijawab |
 | FR-04 Basis pengetahuan JSON terpisah | ✅ | `knowledge_base.json`, dimuat oleh `KnowledgeBase` |
 | FR-05 Forward chaining berulang sampai stabil | ✅ | Siklus berhenti saat tidak ada aturan baru aktif |
 | FR-06 Operator AND dan OR | ✅ | Termasuk OR bersarang pada R14: `F7 AND (F5 OR F11)` |
-| FR-07 Hasil berprioritas + saran | ✅ | 7 diagnosis akhir, kartu saran per diagnosis |
+| FR-07 Hasil berprioritas + saran | ✅ | 10 diagnosis akhir, kartu saran per diagnosis |
 | FR-08 Fasilitas penjelasan | ✅ | Fakta masukan, tabel iterasi, fakta turunan K/H, pohon alasan JIKA–MAKA |
 | FR-09 “Belum dapat disimpulkan” | ✅ | Menampilkan gejala terdeteksi dan saran pemeriksaan tambahan |
 | FR-10 Konsultasi ulang | ✅ | Mengosongkan sesi dan form |
@@ -35,11 +35,11 @@ Kebutuhan non-fungsional:
 
 Spesifikasi minimum soal UTS:
 
-- 14 fakta (target 10+)
-- 7 diagnosis akhir (target 5+)
-- 5 kesimpulan antara (target 3+)
-- 19 aturan produksi dengan AND/OR (target 15+)
-- 7 skenario uji (target 5+)
+- 20 fakta (target 10+)
+- 10 diagnosis akhir (target 5+)
+- 9 kesimpulan antara (target 3+)
+- 31 aturan produksi dengan AND/OR (target 15+)
+- 13 skenario uji (target 5+)
 - Basis pengetahuan JSON terpisah, fasilitas penjelasan, validasi, penanganan “belum dapat disimpulkan”, dan konsultasi ulang
 
 ---
@@ -50,7 +50,7 @@ Spesifikasi minimum soal UTS:
 .
 ├── app.py                  # Pengendali HTTP (API + berkas statis), tanpa Flask
 ├── inference_engine.py     # Mesin forward chaining, validasi, jejak, pohon alasan
-├── knowledge_base.json     # 14 fakta, 19 aturan, 12 kesimpulan, 4 sumber, 7 skenario
+├── knowledge_base.json     # 20 fakta, 31 aturan, 19 kesimpulan, 10 sumber, 13 skenario
 ├── jalankan.bat            # Klik dua kali untuk menjalankan di Windows
 ├── static/
 │   ├── index.html          # Beranda, konsultasi, hasil, basis pengetahuan, tentang
@@ -58,7 +58,7 @@ Spesifikasi minimum soal UTS:
 │   ├── app.js              # Routing, form, render hasil, ekspor, tab
 │   └── favicon.svg
 ├── tests/
-│   ├── test_engine.py      # 15 pengujian mesin (termasuk 7 skenario PRD)
+│   ├── test_engine.py      # 17 pengujian mesin (termasuk 13 skenario uji)
 │   └── test_api.py         # 13 pengujian integrasi HTTP
 ├── docs/
 │   ├── PEMETAAN_PRD.md     # Keterlacakan kebutuhan PRD ke kode
@@ -127,7 +127,7 @@ Untuk demo cepat tanpa deploy, lihat bagian Cloudflare Tunnel/ngrok di `DEPLOY.m
 
 ## 4. Alur demonstrasi (di bawah 5 menit)
 
-1. **Beranda** — jelaskan tujuan, batasan, dan angka basis pengetahuan (14/19/7).
+1. **Beranda** — jelaskan tujuan, batasan, dan angka basis pengetahuan (20/31/10).
 2. **Konsultasi** — tunjukkan tiga kelompok pertanyaan dan validasi saat tombol Proses ditekan tanpa menjawab.
 3. Isi skenario **F1 + F14** (Bluetooth laptop tidak bisa diaktifkan dan pairing ulang tetap gagal), jawab pertanyaan lain **Tidak**.
 4. **Hasil** — tunjukkan diagnosis **H1** berprioritas 1, langkah perbaikan, waktu inferensi, dan iterasi.
@@ -149,8 +149,14 @@ Untuk demo cepat tanpa deploy, lihat bagian Cloudflare Tunnel/ngrok di `DEPLOY.m
 | 5 | F3, F4 | R7, R16 | H6 | 2 |
 | 6 | F7, F11 | R14 | H4 | 1 |
 | 7 | F7 saja | — | Belum dapat disimpulkan | 0 |
+| 8 | F15, F4 | R20, R26 | H10 | 2 |
+| 9 | F16, F5 | R22, R28 | H9 | 2 |
+| 10 | F18 | R24, R30 | H8 | 2 |
+| 11 | F19 | R25, R31 | H7 | 2 |
+| 12 | F20, F14 | R21, R27 | H10 | 2 |
+| 13 | F17, F11 | R23, R29 | H9 | 2 |
 
-Seluruh skenario sesuai (7/7 = 100%). Rincian bukti ada di [`docs/HASIL_UJI.md`](docs/HASIL_UJI.md).
+Seluruh skenario sesuai (13/13 = 100%). Rincian bukti ada di [`docs/HASIL_UJI.md`](docs/HASIL_UJI.md).
 
 ---
 
@@ -158,19 +164,19 @@ Seluruh skenario sesuai (7/7 = 100%). Rincian bukti ada di [`docs/HASIL_UJI.md`]
 
 ### Fakta (F)
 
-14 fakta dibagi ke tiga kelompok:
+20 fakta dibagi ke tiga kelompok:
 
 | Kelompok | Fakta |
 | --- | --- |
-| Laptop & sistem | F1, F8, F10, F12 |
-| Perangkat Bluetooth | F2, F3, F4, F7, F9, F11, F13, F14 |
-| Lingkungan & sinyal | F5, F6 |
+| Laptop & sistem | F1, F8, F10, F12, F15, F19, F20 |
+| Perangkat Bluetooth | F2, F3, F4, F7, F9, F11, F13, F14, F18 |
+| Lingkungan & sinyal | F5, F6, F16, F17 |
 
 Setiap fakta memiliki `hint` (keterangan untuk pengguna) dan `solo_advice` (saran bila fakta muncul tanpa diagnosis).
 
 ### Kesimpulan antara (K)
 
-K1 adaptor tidak siap · K2 perangkat belum siap dipasangkan · K3 sinyal radio terganggu · K4 keluaran audio salah · K5 data pairing lama bermasalah.
+K1 adaptor tidak siap · K2 perangkat belum siap dipasangkan · K3 sinyal radio terganggu · K4 keluaran audio salah · K5 data pairing lama bermasalah · K6 profil/codec audio tidak sesuai · K7 kanal 2,4 GHz padat · K8 jalur adaptor/driver belum optimal · K9 adaptor tidak dipulihkan setelah tidur/startup cepat.
 
 ### Diagnosis akhir (H) dan prioritas
 
@@ -183,10 +189,13 @@ K1 adaptor tidak siap · K2 perangkat belum siap dipasangkan · K3 sinyal radio 
 | 5 | H4 | Baterai perangkat lemah |
 | 6 | H3 | Interferensi atau jarak/penghalang |
 | 7 | H5 | Output audio default belum diarahkan ke perangkat |
+| 8 | H8 | Profil atau codec audio tidak sesuai |
+| 9 | H9 | Kanal 2,4 GHz padat |
+| 10 | H10 | Adaptor USB atau driver generik tidak kompatibel |
 
 Prioritas hanya mengatur urutan tampil/pemeriksaan, bukan menghapus diagnosis lain.
 
-### Aturan (19)
+### Aturan (31)
 
 ```text
 R1  F1                         -> K1
@@ -208,7 +217,38 @@ R16 K5 AND F4                  -> H6
 R17 K5 AND F8                  -> H6
 R18 F12 AND F3                 -> H7
 R19 F12 AND F5                 -> H7
+R20 F15                        -> K8
+R21 F20                        -> K8
+R22 F16                        -> K7
+R23 F17                        -> K7
+R24 F18                        -> K6
+R25 F19                        -> K9
+R26 K8 AND F4                  -> H10
+R27 K8 AND F14                 -> H10
+R28 K7 AND F5                  -> H9
+R29 K7 AND F11                 -> H9
+R30 K6                         -> H8
+R31 K9                         -> H7
 ```
+
+### Sumber pengetahuan (S)
+
+Basis aturan ditopang 10 sumber: dokumentasi vendor, standar, dan literatur ilmiah. Setiap aturan menunjuk satu sumber melalui field `"source"`.
+
+| ID | Sumber | Jenis | Status |
+| --- | --- | --- | --- |
+| S1 | Fix Bluetooth problems in Windows — Microsoft Support | Dokumentasi vendor | Terverifikasi |
+| S2 | Buku manual perangkat Bluetooth (earphone, speaker, keyboard) | Manual pabrikan | Perlu dilengkapi |
+| S3 | Wawancara teknisi komputer | Akuisisi pakar | Perlu dilengkapi |
+| S4 | Bluetooth Core Specification — operasi pita 2,4 GHz — Bluetooth SIG | Standar | Terverifikasi |
+| S5 | Interference Evaluation of Bluetooth and IEEE 802.11b Systems — Wireless Networks, Springer (2003) | Jurnal | Terverifikasi |
+| S6 | USB 3.0 Radio Frequency Interference Impact on 2.4 GHz Wireless Devices — Intel/USB-IF (white paper 327216-001, 2012) | White paper industri | Terverifikasi |
+| S7 | Guide to Bluetooth Security (NIST SP 800-121 Rev. 2) — NIST | Standar | Terverifikasi |
+| S8 | LE Audio — Bluetooth SIG | Dokumentasi teknologi | Terverifikasi |
+| S9 | Interference Modeling and Performance of Bluetooth MAC Protocol — IEEE Transactions on Wireless Communications (2003) | Jurnal | Terverifikasi |
+| S10 | Bluetooth power management for modern standby platforms — Microsoft Learn | Dokumentasi vendor | Terverifikasi |
+
+Sumber S5–S10 menjadi dasar rujukan ilmiah untuk fakta turunan F15–F20 dan aturan R20–R31, misalnya interferensi Wi-Fi/Bluetooth (S5), derau USB 3.0 (S6), perilaku pairing (S7), profil/codec audio (S8), kepadatan kanal saat banyak perangkat aktif (S9), dan manajemen daya adaptor (S10). URL lengkap dan `contribution` tiap sumber dapat dilihat pada `knowledge_base.json` dan tab **Sumber** di aplikasi.
 
 ### Format JSON
 
@@ -318,14 +358,15 @@ Kesalahan validasi mengembalikan HTTP 400 dengan `error`, `missing`, dan `invali
 python -m unittest discover -s tests -v
 ```
 
-Hasil terakhir: **28 pengujian lulus**, mencakup:
+Hasil terakhir: **30 pengujian lulus**, mencakup:
 
-- 7 skenario PRD beserta aturan yang berjalan,
+- 13 skenario uji beserta aturan yang berjalan,
 - validasi masukan (kosong, hilang, tipe salah, kode asing),
 - semantik AND/OR bersarang,
 - urutan prioritas saat beberapa diagnosis muncul,
 - pohon penjelasan dan jejak iterasi,
 - kinerja inferensi < 1 detik,
+- kelengkapan sumber literatur S5–S10 dan rujukan sumber pada setiap aturan,
 - API, header keamanan, penyajian aset statis,
 - penulisan log tanpa data pribadi.
 
@@ -348,7 +389,7 @@ Kode inferensi tidak perlu diubah (FR-04). Jika menambah fakta, form, progres, d
 ### Sebelum pengumpulan tugas
 
 - Isi `meta.author` pada `knowledge_base.json` dan halaman Tentang dengan **NIM + nama**.
-- Lengkapi sumber **S2** (merek/model manual perangkat) dan **S3** (nama, tanggal, ringkasan wawancara). Status “Perlu dilengkapi” terlihat pada tab Sumber.
+- Lengkapi sumber **S2** (merek/model manual perangkat) dan **S3** (nama, tanggal, ringkasan wawancara). Status “Perlu dilengkapi” terlihat pada tab Sumber. Sumber literatur **S5–S10** sudah terverifikasi dan siap dikutip di laporan.
 - Ganti placeholder `(isi NIM dan nama)` pada `static/index.html` bila diperlukan.
 - Simpan versi awal dan akhir basis aturan sebagai bukti proses.
 - Cantumkan pernyataan penggunaan AI pada laporan akhir.
@@ -388,4 +429,4 @@ Struktur dokumen, kode, dan sebagian teks dibantu oleh AI. Penulis bertanggung j
 
 **Mata kuliah:** Sistem Pakar (TI22604) · UTS Semester Ganjil 2026/2027  
 **Metode:** Forward Chaining · **Platform:** Windows 10/11 · localhost  
-**Versi aplikasi:** 2.0
+**Versi aplikasi:** 2.1

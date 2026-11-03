@@ -1,4 +1,4 @@
-"""Pengujian mesin inferensi terhadap 7 skenario PRD + kasus tambahan.
+"""Pengujian mesin inferensi terhadap 13 skenario uji (7 PRD + 6 perluasan).
 
 Jalankan dari akar proyek:
     python -m unittest discover -s tests -v
@@ -37,12 +37,12 @@ class EngineTestCase(unittest.TestCase):
 
 class TestKnowledgeBase(EngineTestCase):
     def test_minimum_specification(self) -> None:
-        self.assertEqual(len(self.kb.facts), 14)
-        self.assertEqual(len(self.kb.rules), 19)
-        self.assertEqual(len(self.kb.final_conclusions), 7)
+        self.assertEqual(len(self.kb.facts), 20)
+        self.assertEqual(len(self.kb.rules), 31)
+        self.assertEqual(len(self.kb.final_conclusions), 10)
         self.assertEqual(
             sum(1 for item in self.kb.conclusions.values() if item["type"] == "intermediate"),
-            5,
+            9,
         )
         for check in self.kb.compliance():
             self.assertTrue(check["met"], f"Spesifikasi gagal: {check}")
@@ -54,11 +54,28 @@ class TestKnowledgeBase(EngineTestCase):
 
     def test_public_data_has_rule_explanations(self) -> None:
         data = self.kb.public_data()
-        self.assertEqual(len(data["facts"]), 14)
-        self.assertEqual(len(data["rules"]), 19)
+        self.assertEqual(len(data["facts"]), 20)
+        self.assertEqual(len(data["rules"]), 31)
         rule = next(item for item in data["rules"] if item["id"] == "R14")
         self.assertEqual(rule["premise_label"], "F7 DAN (F5 ATAU F11)")
         self.assertIn("Baterai perangkat", rule["premise_sentence"])
+
+    def test_every_rule_cites_a_known_source(self) -> None:
+        source_ids = {source["id"] for source in self.kb.sources}
+        for rule in self.kb.raw_rules:
+            with self.subTest(rule=rule["id"]):
+                self.assertIn(rule.get("source"), source_ids)
+
+    def test_literature_sources_are_complete(self) -> None:
+        by_id = {source["id"]: source for source in self.kb.sources}
+        for source_id in ("S5", "S6", "S7", "S8", "S9", "S10"):
+            with self.subTest(source=source_id):
+                source = by_id[source_id]
+                self.assertTrue(source["title"].strip())
+                self.assertTrue(source["publisher"].strip())
+                self.assertTrue(source["url"].startswith("https://"))
+                self.assertEqual(source["status"], "terverifikasi")
+                self.assertTrue(source["contribution"].strip())
 
 
 class TestScenarios(EngineTestCase):
@@ -157,7 +174,7 @@ class TestAdditionalCases(EngineTestCase):
     def test_validation_rejects_missing_answers(self) -> None:
         with self.assertRaises(InputError) as context:
             validate_answers(self.kb, {"answers": {"F1": True}})
-        self.assertEqual(len(context.exception.missing), 13)
+        self.assertEqual(len(context.exception.missing), 19)
         self.assertIn("F2", context.exception.missing)
 
     def test_validation_rejects_invalid_values(self) -> None:

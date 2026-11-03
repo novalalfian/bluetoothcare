@@ -6,7 +6,7 @@ menyentuh kode inferensi.
 
 Alur utama:
 1. ``KnowledgeBase`` memuat dan memvalidasi fakta, aturan, serta kesimpulan.
-2. ``validate_answers`` memastikan seluruh 14 fakta dijawab Ya/Tidak.
+2. ``validate_answers`` memastikan seluruh fakta dijawab Ya/Tidak.
 3. ``run_inference`` menjalankan siklus forward chaining sampai stabil:
    kumpulkan aturan yang aktif -> jalankan -> tambahkan fakta baru -> ulangi.
 4. Setiap aturan yang berjalan dicatat pada ``trace`` (fasilitas penjelasan).

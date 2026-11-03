@@ -224,16 +224,16 @@ https://URL-ANDA/api/health
 Respons yang diharapkan:
 
 ```json
-{"status":"ok","facts":14,"rules":19,"conclusions":12}
+{"status":"ok","facts":20,"rules":31,"conclusions":19}
 ```
 
 Lalu uji:
 
 1. Halaman beranda terbuka.
-2. Form menampilkan 14 pertanyaan.
+2. Form menampilkan 20 pertanyaan.
 3. Skenario F1 + F14 menghasilkan H1.
 4. Unduh TXT berfungsi.
-5. Halaman basis pengetahuan menampilkan 14 fakta dan 19 aturan.
+5. Halaman basis pengetahuan menampilkan 20 fakta dan 31 aturan.
 
 ---
 

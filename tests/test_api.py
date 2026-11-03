@@ -63,9 +63,10 @@ class APITestCase(unittest.TestCase):
         self.assertIn("application/json", headers["content-type"])
         self.assertIn("content-security-policy", headers)
         data = json.loads(payload.decode("utf-8"))
-        self.assertEqual(len(data["facts"]), 14)
-        self.assertEqual(len(data["rules"]), 19)
-        self.assertEqual(data["stats"]["final"], 7)
+        self.assertEqual(len(data["facts"]), 20)
+        self.assertEqual(len(data["rules"]), 31)
+        self.assertEqual(data["stats"]["final"], 10)
+        self.assertEqual(len(data["sources"]), 10)
         self.assertTrue(all(item["met"] for item in data["compliance"]))
 
     def test_health_endpoint(self) -> None:
@@ -73,7 +74,7 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(status, 200)
         data = json.loads(payload)
         self.assertEqual(data["status"], "ok")
-        self.assertEqual(data["rules"], 19)
+        self.assertEqual(data["rules"], 31)
 
     def test_index_page(self) -> None:
         status, headers, payload = self.request("GET", "/")
@@ -110,7 +111,7 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(data["status"], "diagnosed")
         self.assertEqual([item["id"] for item in data["diagnoses"]], ["H1"])
         self.assertEqual([item["rule_id"] for item in data["trace"]], ["R1", "R9"])
-        self.assertEqual(data["stats"]["answered"], 14)
+        self.assertEqual(data["stats"]["answered"], 20)
 
     def test_diagnose_inconclusive(self) -> None:
         body = json.dumps({"answers": self.answers(["F7"])}).encode("utf-8")

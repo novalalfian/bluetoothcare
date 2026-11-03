@@ -5,12 +5,12 @@
     "subtitle": "Diagnosis awal gangguan earphone, speaker, dan keyboard Bluetooth di Windows 10/11",
     "course": "Sistem Pakar (TI22604) — UTS Semester Ganjil 2026/2027",
     "author": "(isi NIM dan nama)",
-    "version": "2.0",
-    "updated": "2026-11-02",
+    "version": "2.1",
+    "updated": "2026-11-03",
     "method": "Forward Chaining",
     "platform": "Windows 10/11",
     "disclaimer": "Hasil sistem adalah diagnosis awal, bukan pengganti pemeriksaan teknisi. Sistem tidak mengubah pengaturan laptop secara otomatis dan tidak mengumpulkan data pribadi.",
-    "description": "Pengguna menjawab 14 pertanyaan Ya/Tidak. Mesin inferensi menelusuri 19 aturan JIKA-MAKA secara berulang sampai tidak ada fakta baru, lalu menampilkan diagnosis berurutan prioritas beserta langkah perbaikan dan jejak penalaran.",
+    "description": "Pengguna menjawab 20 pertanyaan Ya/Tidak. Mesin inferensi menelusuri 31 aturan JIKA-MAKA secara berulang sampai tidak ada fakta baru, lalu menampilkan diagnosis berurutan prioritas beserta langkah perbaikan dan jejak penalaran. Basis aturan diperkuat sumber vendor, standar, dan literatur ilmiah (S1-S10).",
     "groups": [
       {
         "id": "laptop",
@@ -77,6 +77,48 @@
         "rules": [],
         "result": null,
         "note": "Hanya satu gejala, belum membentuk pola diagnosis."
+      },
+      {
+        "no": 8,
+        "facts": ["F15", "F4"],
+        "rules": ["R20", "R26"],
+        "result": "H10",
+        "note": "Receiver USB 3.0 memancarkan derau dan pairing tetap gagal."
+      },
+      {
+        "no": 9,
+        "facts": ["F16", "F5"],
+        "rules": ["R22", "R28"],
+        "result": "H9",
+        "note": "Wi-Fi 2,4 GHz aktif bersamaan dengan suara putus-putus."
+      },
+      {
+        "no": 10,
+        "facts": ["F18"],
+        "rules": ["R24", "R30"],
+        "result": "H8",
+        "note": "Audio tidak sinkron menandakan profil atau codec tidak sesuai."
+      },
+      {
+        "no": 11,
+        "facts": ["F19"],
+        "rules": ["R25", "R31"],
+        "result": "H7",
+        "note": "Tidak tersambung kembali setelah tidur menandakan manajemen daya."
+      },
+      {
+        "no": 12,
+        "facts": ["F20", "F14"],
+        "rules": ["R21", "R27"],
+        "result": "H10",
+        "note": "Driver generik dipasang dan pairing ulang tetap gagal."
+      },
+      {
+        "no": 13,
+        "facts": ["F17", "F11"],
+        "rules": ["R23", "R29"],
+        "result": "H9",
+        "note": "Banyak perangkat Bluetooth aktif disertai input yang lambat."
       }
     ]
   },
@@ -178,6 +220,48 @@
       "group": "perangkat",
       "hint": "Sudah Remove device dan pairing ulang, tetapi gejala yang sama tetap muncul.",
       "solo_advice": "Coba perangkat pada laptop lain. Jika tetap bermasalah, kemungkinan ada pada perangkat; jika normal, fokus pada driver atau adaptor laptop."
+    },
+    {
+      "id": "F15",
+      "text": "Receiver atau adaptor Bluetooth memakai port USB 3.0 atau berada dekat kabel/port USB 3.0",
+      "group": "laptop",
+      "hint": "Receiver Bluetooth menancap di port USB 3.0 atau berdekatan dengan kabel dan port USB 3.0 lain.",
+      "solo_advice": "Gunakan kabel ekstensi USB untuk menjauhkan receiver dari bodi laptop dan port USB 3.0, atau pindahkan receiver ke port USB 2.0."
+    },
+    {
+      "id": "F16",
+      "text": "Wi-Fi 2,4 GHz sedang aktif dan router berada dekat laptop",
+      "group": "lingkungan",
+      "hint": "Laptop terhubung ke Wi-Fi yang berjalan pada pita 2,4 GHz, atau router berada dalam jarak dekat.",
+      "solo_advice": "Pindahkan koneksi Wi-Fi ke pita 5 GHz bila tersedia, atau jauhkan router dari laptop dan perangkat Bluetooth."
+    },
+    {
+      "id": "F17",
+      "text": "Banyak perangkat Bluetooth aktif bersamaan di sekitar laptop",
+      "group": "lingkungan",
+      "hint": "Beberapa earphone, speaker, keyboard, atau mouse Bluetooth aktif pada saat yang sama.",
+      "solo_advice": "Matikan atau putuskan perangkat Bluetooth yang tidak sedang dipakai untuk mengurangi kepadatan kanal."
+    },
+    {
+      "id": "F18",
+      "text": "Audio terlambat, tidak sinkron dengan video, atau hanya satu sisi yang berbunyi",
+      "group": "perangkat",
+      "hint": "Suara muncul terlambat dibanding gambar, atau hanya keluar dari kanal kiri/kanan.",
+      "solo_advice": "Pilih profil atau codec audio yang didukung perangkat, aktifkan mode latensi rendah bila tersedia, dan periksa keseimbangan kanal."
+    },
+    {
+      "id": "F19",
+      "text": "Perangkat tidak tersambung kembali setelah laptop tidur, hibernate, atau Fast Startup",
+      "group": "laptop",
+      "hint": "Setelah bangun dari sleep atau setelah Shut down dengan Fast Startup, Bluetooth tidak kembali aktif.",
+      "solo_advice": "Nonaktifkan Fast Startup, lalu periksa Device Manager > Bluetooth > Power Management agar Windows tidak mematikan adaptor saat tidur."
+    },
+    {
+      "id": "F20",
+      "text": "Driver Bluetooth terpasang dari Windows Update, bukan dari pabrikan adaptor",
+      "group": "laptop",
+      "hint": "Driver generik bawaan Windows terpasang alih-alih driver resmi dari situs pabrikan laptop atau chipset.",
+      "solo_advice": "Unduh dan pasang driver Bluetooth resmi dari situs pabrikan laptop atau chipset, lalu restart."
     }
   ],
   "conclusions": [
@@ -218,6 +302,38 @@
       "type": "intermediate",
       "text": "Data pairing lama berpotensi bermasalah",
       "summary": "Data pairing tersimpan tetapi tidak lagi cocok dengan kondisi perangkat.",
+      "priority": null,
+      "advice": []
+    },
+    {
+      "id": "K6",
+      "type": "intermediate",
+      "text": "Profil atau codec audio tidak sesuai",
+      "summary": "Profil atau codec Bluetooth tidak cocok dengan kemampuan perangkat sehingga audio terlambat atau tidak sinkron.",
+      "priority": null,
+      "advice": []
+    },
+    {
+      "id": "K7",
+      "type": "intermediate",
+      "text": "Kanal 2,4 GHz padat",
+      "summary": "Banyak perangkat nirkabel berbagi pita 2,4 GHz sehingga terjadi interferensi.",
+      "priority": null,
+      "advice": []
+    },
+    {
+      "id": "K8",
+      "type": "intermediate",
+      "text": "Jalur adaptor atau driver belum optimal",
+      "summary": "Adaptor USB atau driver generik menurunkan kualitas tautan Bluetooth.",
+      "priority": null,
+      "advice": []
+    },
+    {
+      "id": "K9",
+      "type": "intermediate",
+      "text": "Adaptor tidak dipulihkan setelah tidur atau startup cepat",
+      "summary": "Pengaturan daya Windows atau Fast Startup membuat adaptor Bluetooth tidak kembali aktif.",
       "priority": null,
       "advice": []
     },
@@ -310,6 +426,45 @@
         "Buka Pengaturan > Sistem > Suara > Output, lalu pilih perangkat Bluetooth.",
         "Klik kanan ikon Volume > Open Volume Mixer, pastikan perangkat dan aplikasi tidak dalam keadaan mute.",
         "Di aplikasi seperti Zoom, Teams, atau browser, pilih juga perangkat output yang benar."
+      ]
+    },
+    {
+      "id": "H8",
+      "type": "final",
+      "text": "Profil atau codec audio tidak sesuai",
+      "summary": "Perangkat memakai profil atau codec yang tidak cocok sehingga audio terlambat, tidak sinkron, atau hanya satu kanal.",
+      "priority": 8,
+      "advice": [
+        "Buka Pengaturan > Bluetooth & perangkat, pilih perangkat audio, lalu periksa profil yang aktif.",
+        "Pilih profil stereo (A2DP) untuk musik dan profil hands-free hanya untuk panggilan.",
+        "Aktifkan mode latensi rendah pada aplikasi atau driver perangkat bila tersedia.",
+        "Periksa pengaturan keseimbangan kanal di Pengaturan > Sistem > Suara dan pastikan tidak berat ke satu sisi."
+      ]
+    },
+    {
+      "id": "H9",
+      "type": "final",
+      "text": "Kanal 2,4 GHz padat",
+      "summary": "Wi-Fi 2,4 GHz dan banyak perangkat Bluetooth berbagi pita yang sama sehingga tautan tidak stabil.",
+      "priority": 9,
+      "advice": [
+        "Pindahkan Wi-Fi ke pita 5 GHz bila router dan laptop mendukung.",
+        "Jauhkan router, microwave, dan perangkat nirkabel lain dari laptop serta perangkat Bluetooth.",
+        "Matikan perangkat Bluetooth yang tidak sedang dipakai.",
+        "Jika memakai receiver USB, gunakan kabel ekstensi agar receiver menjauh dari sumber derau."
+      ]
+    },
+    {
+      "id": "H10",
+      "type": "final",
+      "text": "Adaptor USB atau driver generik tidak kompatibel",
+      "summary": "Adaptor Bluetooth pada port USB 3.0 atau driver generik bawaan Windows menurunkan kualitas dan kestabilan tautan.",
+      "priority": 10,
+      "advice": [
+        "Pindahkan receiver Bluetooth ke port USB 2.0 atau gunakan kabel ekstensi untuk menjauhkannya dari port USB 3.0.",
+        "Unduh driver Bluetooth resmi dari situs pabrikan laptop atau chipset, lalu pasang dan restart.",
+        "Di Device Manager, hapus perangkat lama yang tidak terpakai, lalu pindai ulang perangkat keras.",
+        "Jika masalah berlanjut, uji receiver Bluetooth lain untuk memastikan kondisi adaptor."
       ]
     }
   ],
@@ -408,7 +563,7 @@
       "id": "R16",
       "if": { "and": ["K5", "F4"] },
       "then": "H6",
-      "source": "S2"
+      "source": "S7"
     },
     {
       "id": "R17",
@@ -427,6 +582,78 @@
       "if": { "and": ["F12", "F5"] },
       "then": "H7",
       "source": "S1"
+    },
+    {
+      "id": "R20",
+      "if": "F15",
+      "then": "K8",
+      "source": "S6"
+    },
+    {
+      "id": "R21",
+      "if": "F20",
+      "then": "K8",
+      "source": "S1"
+    },
+    {
+      "id": "R22",
+      "if": "F16",
+      "then": "K7",
+      "source": "S5"
+    },
+    {
+      "id": "R23",
+      "if": "F17",
+      "then": "K7",
+      "source": "S9"
+    },
+    {
+      "id": "R24",
+      "if": "F18",
+      "then": "K6",
+      "source": "S8"
+    },
+    {
+      "id": "R25",
+      "if": "F19",
+      "then": "K9",
+      "source": "S10"
+    },
+    {
+      "id": "R26",
+      "if": { "and": ["K8", "F4"] },
+      "then": "H10",
+      "source": "S6"
+    },
+    {
+      "id": "R27",
+      "if": { "and": ["K8", "F14"] },
+      "then": "H10",
+      "source": "S1"
+    },
+    {
+      "id": "R28",
+      "if": { "and": ["K7", "F5"] },
+      "then": "H9",
+      "source": "S5"
+    },
+    {
+      "id": "R29",
+      "if": { "and": ["K7", "F11"] },
+      "then": "H9",
+      "source": "S9"
+    },
+    {
+      "id": "R30",
+      "if": "K6",
+      "then": "H8",
+      "source": "S8"
+    },
+    {
+      "id": "R31",
+      "if": "K9",
+      "then": "H7",
+      "source": "S10"
     }
   ],
   "sources": [
@@ -465,6 +692,60 @@
       "accessed": "2026-11-02",
       "status": "terverifikasi",
       "contribution": "Dasar interferensi pita 2,4 GHz, jarak jangkauan, dan pengaruh penghalang."
+    },
+    {
+      "id": "S5",
+      "title": "Interference Evaluation of Bluetooth and IEEE 802.11b Systems",
+      "publisher": "Wireless Networks, Springer",
+      "url": "https://link.springer.com/article/10.1023/A:1022821110023",
+      "accessed": "2026-11-03",
+      "status": "terverifikasi",
+      "contribution": "Bukti empiris bahwa Wi-Fi dan Bluetooth pada pita 2,4 GHz saling mengganggu throughput dan packet error rate."
+    },
+    {
+      "id": "S6",
+      "title": "USB 3.0 Radio Frequency Interference Impact on 2.4 GHz Wireless Devices",
+      "publisher": "Intel Corporation / USB-IF (white paper 327216-001)",
+      "url": "https://www.usb.org/sites/default/files/327216.pdf",
+      "accessed": "2026-11-03",
+      "status": "terverifikasi",
+      "contribution": "Mekanisme derau USB 3.0 yang mengganggu penerima 2,4 GHz dan rekomendasi pemisahan fisik serta pemakaian kabel ekstensi."
+    },
+    {
+      "id": "S7",
+      "title": "Guide to Bluetooth Security (NIST SP 800-121 Rev. 2)",
+      "publisher": "NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/121/r2/upd1/final",
+      "accessed": "2026-11-03",
+      "status": "terverifikasi",
+      "contribution": "Standar pengamanan Bluetooth, termasuk perilaku pairing dan penanganan data pairing lama."
+    },
+    {
+      "id": "S8",
+      "title": "LE Audio",
+      "publisher": "Bluetooth SIG",
+      "url": "https://www.bluetooth.com/learn-about-bluetooth/recent-enhancements/le-audio/",
+      "accessed": "2026-11-03",
+      "status": "terverifikasi",
+      "contribution": "Profil dan codec audio Bluetooth modern (LC3) serta pengaruhnya terhadap latensi dan sinkronisasi audio."
+    },
+    {
+      "id": "S9",
+      "title": "Interference Modeling and Performance of Bluetooth MAC Protocol",
+      "publisher": "IEEE Transactions on Wireless Communications",
+      "url": "https://ieeexplore.ieee.org/document/1244801",
+      "accessed": "2026-11-03",
+      "status": "terverifikasi",
+      "contribution": "Pemodelan kinerja kanal Bluetooth saat beberapa perangkat (piconet) aktif secara bersamaan."
+    },
+    {
+      "id": "S10",
+      "title": "Bluetooth power management for modern standby platforms",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/bluetooth-power-management-for-modern-standby-platforms",
+      "accessed": "2026-11-03",
+      "status": "terverifikasi",
+      "contribution": "Perilaku daya adaptor Bluetooth saat sleep/modern standby dan syarat pemulihan koneksi setelah bangun."
     }
   ]
 }
