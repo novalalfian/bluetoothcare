@@ -231,6 +231,8 @@ R30 K6                         -> H8
 R31 K9                         -> H7
 ```
 
+Pada antarmuka, tabel aturan dikelompokkan menurut kesimpulan (MAKA). Satu kesimpulan dapat dihasilkan beberapa aturan dengan premis berbeda; mesin menyimpan kesimpulan di memori kerja sebagai himpunan sehingga hanya ditambahkan sekali, sedangkan setiap aturan tetap dicatat di jejak penalaran.
+
 ### Sumber pengetahuan (S)
 
 Basis aturan ditopang 10 sumber: dokumentasi vendor, standar, dan literatur ilmiah. Setiap aturan menunjuk satu sumber melalui field `"source"`.

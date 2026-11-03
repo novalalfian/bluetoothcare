@@ -2173,6 +2173,27 @@ code {
   color: #fff;
 }
 
+.data-table-rules tbody tr.rule-group-start td {
+  border-top: 2px solid var(--line-strong);
+}
+
+.data-table-rules tbody tr:first-child td {
+  border-top: 0;
+}
+
+.data-table-rules td.rule-conclusion {
+  min-width: 190px;
+  vertical-align: middle;
+  border-left: 1px solid var(--line-strong);
+}
+
+.data-table-rules .rule-conclusion-text {
+  display: block;
+  margin-top: 5px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+
 .status-baru {
   display: inline-flex;
   align-items: center;

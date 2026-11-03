@@ -1139,28 +1139,53 @@
   function renderRulesTable() {
     if (!els.rulesTable || !state.kb) return;
     const conclusions = new Map(state.kb.conclusions.map((item) => [item.id, item]));
-    const rows = state.kb.rules
-      .map((rule) => {
-        const conclusion = conclusions.get(rule.then);
-        const isFinal = conclusion?.type === "final";
-        return `
-          <tr>
+
+    // Kelompokkan aturan menurut kesimpulan (MAKA) supaya aturan yang
+    // menghasilkan kesimpulan sama tampil berdampingan, bukan terpisah.
+    // Urutan: kesimpulan antara (K) dulu, lalu diagnosis akhir (H) per prioritas.
+    const intermediateOrder = state.kb.conclusions.filter(
+      (item) => item.type === "intermediate"
+    );
+    const finalOrder = state.kb.conclusions
+      .filter((item) => item.type === "final")
+      .sort((left, right) => (left.priority ?? 99) - (right.priority ?? 99));
+    const grouped = [...intermediateOrder, ...finalOrder];
+
+    const groups = grouped
+      .map((conclusion) => ({
+        conclusion,
+        rules: state.kb.rules.filter((rule) => rule.then === conclusion.id),
+      }))
+      .filter((group) => group.rules.length > 0);
+
+    const rows = groups
+      .flatMap((group) => {
+        const conclusion = group.conclusion;
+        const isFinal = conclusion.type === "final";
+        return group.rules.map((rule, index) => {
+          const isGroupStart = index === 0;
+          const conclusionCell = isGroupStart
+            ? `<td rowspan="${group.rules.length}" class="rule-conclusion">
+                 <span class="conclusion-code${isFinal ? " is-final" : ""}">${escapeHtml(
+                conclusion.id
+              )}</span>
+                 <span class="rule-conclusion-text">${escapeHtml(conclusion.text || "")}</span>
+               </td>`
+            : "";
+          return `
+          <tr${isGroupStart ? ' class="rule-group-start"' : ""}>
             <td class="mono"><strong>${escapeHtml(rule.id)}</strong></td>
             <td><span class="rule-premise">${highlightOperators(rule.premise_label)}</span></td>
-            <td>
-              <span class="conclusion-code${isFinal ? " is-final" : ""}">${escapeHtml(
-          rule.then
-        )}</span>
-              ${escapeHtml(conclusion?.text || "")}
-            </td>
+            ${conclusionCell}
             <td class="mono">${escapeHtml(rule.source || "—")}</td>
           </tr>`;
+        });
       })
       .join("");
 
     els.rulesTable.innerHTML = `
       <div class="table-scroll">
-        <table class="data-table">
+        <table class="data-table data-table-rules">
           <thead>
             <tr>
               <th scope="col">Kode</th>
