@@ -409,6 +409,8 @@ Aplikasi berupa Single Page Application dengan hash routing (tanpa server render
 
 Prinsip desain: bahasa Indonesia sederhana, tiap pertanyaan punya `hint`, tombol besar, desain responsif (laptop dan ponsel), dan gaya cetak khusus untuk ekspor PDF.
 
+Pemilih jenis perangkat pada halaman konsultasi menyaring pertanyaan yang tidak relevan: mode **audio** menyembunyikan F11, mode **keyboard/mouse** menyembunyikan F5, F8, dan F18, sedangkan mode **semua perangkat** menampilkan seluruh 20 pertanyaan. Fakta yang disembunyikan dikirim bernilai `Tidak` agar validasi 20 fakta pada API tetap terpenuhi.
+
 ### 3.4 Rancangan Data (Struktur JSON)
 
 ```json
@@ -773,8 +775,7 @@ for cid in self.conclusions:
 [SISIPKAN GAMBAR]
 
 1. **Br-01 Beranda** — judul, statistik basis pengetahuan (20/31/10), tombol Mulai.
-2. **Br-02 Konsultasi** — pemilih jenis perangkat, pertanyaan relevan dalam 3 kelompok, progres.
-3. **Br-02a Mode audio** — pemilih “Earphone, headset, atau speaker”; F11 disembunyikan dan jumlah pertanyaan menjadi 19.
+2. **Br-02 Konsultasi** — pemilih jenis perangkat, pertanyaan relevan dalam 3 kelompok, progres; sertakan tampilan mode audio (F11 tersembunyi, 19 pertanyaan).
 3. **Br-03 Hasil H1** — kartu diagnosis prioritas 1, langkah perbaikan, jejak 2 iterasi.
 4. **Br-04 Pohon alasan** — R9 → K1 → R1 → F1 dan F14.
 5. **Br-05 Belum dapat disimpulkan** — skenario F7 dan saran baterai.
