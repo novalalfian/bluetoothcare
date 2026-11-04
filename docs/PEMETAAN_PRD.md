@@ -8,6 +8,7 @@ Dokumen ini menghubungkan setiap kebutuhan pada PRD versi 2.0 dengan berkas, fun
 | --- | --- | --- | --- |
 | FR-01 | Halaman pembuka: judul, deskripsi, batasan, tombol Mulai | `static/index.html` bagian `#view-beranda`; hero, bagian ruang lingkup, CTA | Buka `#beranda`; tombol “Mulai konsultasi” menuju `#konsultasi` |
 | FR-02 | 20 fakta Ya/Tidak, 3 kelompok | `knowledge_base.json` → `facts` + `meta.groups`; dirender `renderQuestionGroups()` di `static/app.js` | Form menampilkan 20 pertanyaan dalam 3 fieldset |
+| FR-02a | Filter pertanyaan menurut jenis perangkat | `DEVICES`, `visibleFacts()`, `hiddenFactIds()`, `onDeviceChange()` di `static/app.js`; `#device-select` di `static/index.html` | Pilih audio → 19 pertanyaan (F11 hilang); pilih keyboard/mouse → 17 pertanyaan (F5, F8, F18 hilang); pertanyaan tersembunyi dikirim sebagai `false` |
 | FR-03 | Validasi: semua wajib dijawab | `validate_answers()` (`inference_engine.py`); validasi klien `onSubmit()` + `markInvalid()` | Tekan Proses tanpa menjawab → pesan menyebut kode, pertanyaan ditandai merah |
 | FR-04 | Basis pengetahuan JSON terpisah | `knowledge_base.json`; `KnowledgeBase.load()`; tidak ada aturan di kode inferensi | Ubah JSON → restart/muat ulang → perilaku berubah tanpa menyentuh Python/JS |
 | FR-05 | Forward chaining berulang sampai stabil | `run_inference()`: loop `snapshot` → `conflict_set` → *fire* → ulangi | Jejak F1+F14 menunjukkan iterasi 1 (R1→K1) dan 2 (R9→H1) |

@@ -230,7 +230,7 @@ Respons yang diharapkan:
 Lalu uji:
 
 1. Halaman beranda terbuka.
-2. Form menampilkan 20 pertanyaan.
+2. Form menampilkan 20 pertanyaan (mode semua perangkat); pilih jenis perangkat untuk menyembunyikan pertanyaan yang tidak relevan.
 3. Skenario F1 + F14 menghasilkan H1.
 4. Unduh TXT berfungsi.
 5. Halaman basis pengetahuan menampilkan 20 fakta dan 31 aturan.

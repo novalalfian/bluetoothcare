@@ -9,6 +9,18 @@
   const ROUTES = ["beranda", "konsultasi", "hasil", "pengetahuan", "tentang"];
   const STORAGE_ANSWERS = "bluetoothcare:answers:v1";
   const STORAGE_RESULT = "bluetoothcare:result:v1";
+  const STORAGE_DEVICE = "bluetoothcare:device:v1";
+  const DEVICES = {
+    all: { label: "Semua perangkat", hidden: [] },
+    audio: {
+      label: "Earphone, headset, atau speaker",
+      hidden: ["F11"],
+    },
+    input: {
+      label: "Keyboard atau mouse",
+      hidden: ["F5", "F8", "F18"],
+    },
+  };
   const TITLES = {
     beranda: "Sistem Pakar Diagnosis Bluetooth — Laptop Windows",
     konsultasi: "Konsultasi — BluetoothCare",
@@ -25,6 +37,7 @@
     activeTab: "facts",
     toastTimer: null,
     submitting: false,
+    device: "all",
   };
 
   const $ = (selector, root = document) => root.querySelector(selector);
@@ -38,6 +51,9 @@
     globalAlertClose: $("#global-alert-close"),
     form: $("#consult-form"),
     questionGroups: $("#question-groups"),
+    deviceSelect: $("#device-select"),
+    questionCount: $("#question-count"),
+    resultQuestionCount: $("#result-question-count"),
     progressCount: $("#progress-count"),
     progressBar: $("#progress-bar"),
     progressTrack: $(".progress-track"),
@@ -118,6 +134,25 @@
     return group ? group.label : groupId || "—";
   }
 
+  function currentDevice() {
+    return DEVICES[state.device] ? state.device : "all";
+  }
+
+  function deviceLabel(deviceId) {
+    const key = DEVICES[deviceId] ? deviceId : "all";
+    return DEVICES[key].label;
+  }
+
+  function hiddenFactIds() {
+    return new Set(DEVICES[currentDevice()].hidden);
+  }
+
+  function visibleFacts() {
+    if (!state.kb) return [];
+    const hidden = hiddenFactIds();
+    return state.kb.facts.filter((fact) => !hidden.has(fact.id));
+  }
+
   function updatePublicStats() {
     if (!state.kb || !state.kb.stats) return;
     $$("[data-stat]").forEach((element) => {
@@ -180,6 +215,9 @@
 
   function restoreSession() {
     try {
+      const device = window.sessionStorage.getItem(STORAGE_DEVICE);
+      if (device && DEVICES[device]) state.device = device;
+
       const answers = JSON.parse(window.sessionStorage.getItem(STORAGE_ANSWERS) || "null");
       if (answers && typeof answers === "object") {
         Object.entries(answers).forEach(([factId, value]) => {
@@ -210,6 +248,14 @@
   function persistAnswers() {
     try {
       window.sessionStorage.setItem(STORAGE_ANSWERS, JSON.stringify(state.answers));
+    } catch (error) {
+      // abaikan
+    }
+  }
+
+  function persistDevice() {
+    try {
+      window.sessionStorage.setItem(STORAGE_DEVICE, state.device);
     } catch (error) {
       // abaikan
     }
@@ -294,6 +340,7 @@
       }
       state.kb = data;
       updatePublicStats();
+      if (els.deviceSelect) els.deviceSelect.value = currentDevice();
 
       // Buang jawaban lama yang tidak dikenal oleh basis pengetahuan saat ini.
       const knownFacts = new Set(data.facts.map((fact) => fact.id));
@@ -333,7 +380,7 @@
     if (!state.kb || !els.questionGroups) return;
     const groups = state.kb.meta.groups || [];
     const factsByGroup = new Map();
-    state.kb.facts.forEach((fact) => {
+    visibleFacts().forEach((fact) => {
       const key = fact.group || "lainnya";
       if (!factsByGroup.has(key)) factsByGroup.set(key, []);
       factsByGroup.get(key).push(fact);
@@ -410,11 +457,14 @@
 
   function updateProgress() {
     if (!state.kb || !els.progressCount) return;
-    const total = state.kb.facts.length;
-    const answered = state.kb.facts.filter(
+    const facts = visibleFacts();
+    const total = facts.length;
+    const answered = facts.filter(
       (fact) => typeof state.answers[fact.id] === "boolean"
     ).length;
     els.progressCount.textContent = `${answered} / ${total}`;
+    if (els.questionCount) els.questionCount.textContent = String(total);
+    if (els.resultQuestionCount) els.resultQuestionCount.textContent = String(total);
     if (els.progressBar) {
       els.progressBar.style.width = `${total ? (answered / total) * 100 : 0}%`;
     }
@@ -479,11 +529,30 @@
       $$("input", question).forEach((radio) => radio.removeAttribute("aria-invalid"));
     }
     if (state.kb) {
-      const complete = state.kb.facts.every(
+      const complete = visibleFacts().every(
         (fact) => typeof state.answers[fact.id] === "boolean"
       );
       if (complete) clearFormError();
     }
+  }
+
+  function onDeviceChange(event) {
+    const value = event.target.value;
+    state.device = DEVICES[value] ? value : "all";
+    persistDevice();
+
+    // Jawaban untuk pertanyaan yang kini disembunyikan dibuang agar
+    // kemajuan jawaban tidak menghitung fakta yang tidak ditampilkan.
+    hiddenFactIds().forEach((factId) => {
+      delete state.answers[factId];
+    });
+    persistAnswers();
+
+    renderQuestionGroups();
+    restoreFormAnswers();
+    clearInvalid();
+    clearFormError();
+    updateProgress();
   }
 
   function resetForm() {
@@ -507,7 +576,14 @@
     const formData = new FormData(els.form);
     const collected = {};
     const missing = [];
+    const hidden = hiddenFactIds();
     state.kb.facts.forEach((fact) => {
+      if (hidden.has(fact.id)) {
+        // Pertanyaan yang tidak relevan dianggap "Tidak" agar validasi API
+        // tetap menerima seluruh 20 fakta.
+        collected[fact.id] = false;
+        return;
+      }
       const value = formData.get(fact.id);
       if (value === "true" || value === "false") {
         collected[fact.id] = value === "true";
@@ -547,7 +623,7 @@
         throw new Error(data.error || `Inferensi gagal (status ${response.status}).`);
       }
 
-      state.result = data;
+      state.result = { ...data, device: currentDevice() };
       if (data.answers) state.answers = data.answers;
       persistAnswers();
       persistResult();
@@ -593,9 +669,9 @@
       : "Kombinasi gejala yang Anda pilih belum membentuk pola diagnosis. Tinjau gejala terdeteksi dan saran pemeriksaan tambahan di bawah.";
     els.resultTime.textContent = `Konsultasi ${formatDateTime(
       result.generated_at
-    )} · ${result.stats.answered} dari ${result.stats.facts_total} pertanyaan dijawab · ${
-      result.stats.yes
-    } gejala "Ya"`;
+    )} · Perangkat: ${deviceLabel(result.device)} · ${result.stats.answered} dari ${
+      result.stats.facts_total
+    } pertanyaan dijawab · ${result.stats.yes} gejala "Ya"`;
 
     const verdict = diagnosed
       ? `
@@ -921,6 +997,7 @@
     add("Forward Chaining · Windows 10/11");
     add("=".repeat(72));
     add(`Waktu konsultasi : ${formatDateTime(result.generated_at)}`);
+    add(`Perangkat        : ${deviceLabel(result.device)}`);
     add(`Status           : ${result.status === "diagnosed" ? "Diagnosis ditemukan" : "Belum dapat disimpulkan"}`);
     add(`Pertanyaan       : ${result.stats.answered} dijawab, ${result.stats.yes} bernilai Ya`);
     add(`Inferensi        : ${result.stats.iterations} iterasi, ${result.stats.rules_fired} aturan, ${formatMs(result.stats.elapsed_ms)}`);
@@ -1380,6 +1457,7 @@
     }
 
     if (els.resetBtn) els.resetBtn.addEventListener("click", resetForm);
+    if (els.deviceSelect) els.deviceSelect.addEventListener("change", onDeviceChange);
     if (els.reconsultTop) els.reconsultTop.addEventListener("click", reconsult);
     if (els.reconsultBottom) els.reconsultBottom.addEventListener("click", reconsult);
     if (els.downloadBtn) els.downloadBtn.addEventListener("click", downloadResult);
@@ -1452,6 +1530,7 @@
   function init() {
     restoreSession();
     bindEvents();
+    if (els.deviceSelect) els.deviceSelect.value = currentDevice();
 
     const pathRoutes = {
       "/konsultasi": "konsultasi",

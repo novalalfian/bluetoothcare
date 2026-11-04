@@ -59,7 +59,7 @@
             <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> Sistem Pakar · Forward Chaining</p>
             <h1>Kenali penyebab <span class="accent">Bluetooth</span> laptop yang bermasalah.</h1>
             <p class="lede">
-              Jawab <span data-stat="facts">20</span> pertanyaan tentang earphone, speaker, keyboard, atau mouse Bluetooth Anda.
+              Jawab hingga <span data-stat="facts">20</span> pertanyaan tentang earphone, speaker, keyboard, atau mouse Bluetooth Anda. Pilih jenis perangkat agar pertanyaan yang tidak relevan disembunyikan.
               Sistem menelusuri <span data-stat="rules">31</span> aturan JIKA–MAKA, menyusun diagnosis berurutan prioritas,
               dan menunjukkan alasan di balik setiap hasil.
             </p>
@@ -128,7 +128,7 @@
             <article class="step-card">
               <span class="step-number">01</span>
               <h3>Jawab gejala</h3>
-              <p>20 pertanyaan Ya/Tidak dibagi ke dalam tiga kelompok: laptop &amp; sistem, perangkat Bluetooth, serta lingkungan &amp; sinyal.</p>
+              <p>Hingga 20 pertanyaan Ya/Tidak dibagi ke dalam tiga kelompok: laptop &amp; sistem, perangkat Bluetooth, serta lingkungan &amp; sinyal. Pilih jenis perangkat lebih dulu agar pertanyaan yang tidak relevan disembunyikan.</p>
             </article>
             <article class="step-card">
               <span class="step-number">02</span>
@@ -220,13 +220,27 @@
     <section class="view page-section" id="view-konsultasi" data-view="konsultasi" hidden>
       <div class="container">
         <header class="page-head">
-          <p class="eyebrow">Konsultasi · <span data-stat="facts">20</span> pertanyaan</p>
+          <p class="eyebrow">Konsultasi · <span id="question-count">20</span> pertanyaan</p>
           <h1>Ceritakan gejala Bluetooth Anda</h1>
           <p class="lede">Centang kondisi yang benar-benar Anda alami saat ini. Sistem akan mencocokkannya dengan pola aturan dan menampilkan diagnosis awal beserta alasannya.</p>
         </header>
 
         <div class="consult-layout">
           <form id="consult-form" class="consult-form" novalidate>
+            <div class="device-card">
+              <div class="device-copy">
+                <label for="device-select">Jenis perangkat yang bermasalah</label>
+                <p>Pertanyaan yang tidak relevan dengan perangkat ini disembunyikan dan otomatis dianggap <strong>Tidak</strong>.</p>
+              </div>
+              <div class="device-field">
+                <select id="device-select" class="device-select" name="device-type">
+                  <option value="all">Tidak yakin — tampilkan semua pertanyaan</option>
+                  <option value="audio">Earphone, headset, atau speaker</option>
+                  <option value="input">Keyboard atau mouse</option>
+                </select>
+              </div>
+            </div>
+
             <div class="progress-card">
               <div class="progress-top">
                 <span>Kemajuan jawaban</span>
@@ -235,7 +249,7 @@
               <div class="progress-track" role="progressbar" aria-label="Jumlah pertanyaan yang sudah dijawab" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0">
                 <span id="progress-bar"></span>
               </div>
-              <p class="progress-hint">Semua pertanyaan wajib dijawab. Pilih <strong>Ya</strong> hanya bila gejala benar-benar terjadi.</p>
+              <p class="progress-hint">Semua pertanyaan yang tampil wajib dijawab. Pilih <strong>Ya</strong> hanya bila gejala benar-benar terjadi.</p>
             </div>
 
             <div id="question-groups">
@@ -297,7 +311,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>
           </span>
           <h1>Belum ada hasil konsultasi</h1>
-          <p>Selesaikan 20 pertanyaan terlebih dahulu agar sistem dapat menelusuri aturan dan menyusun diagnosis.</p>
+          <p>Selesaikan <span id="result-question-count">20</span> pertanyaan terlebih dahulu agar sistem dapat menelusuri aturan dan menyusun diagnosis.</p>
           <a class="btn btn-primary" href="#konsultasi">Mulai konsultasi <span aria-hidden="true">→</span></a>
         </div>
 

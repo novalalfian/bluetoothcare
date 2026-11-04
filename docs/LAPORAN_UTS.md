@@ -402,7 +402,7 @@ Aplikasi berupa Single Page Application dengan hash routing (tanpa server render
 | Hash | Tampilan | Isi |
 | --- | --- | --- |
 | `#beranda` | Beranda | Judul, ruang lingkup, statistik basis pengetahuan, tombol Mulai |
-| `#konsultasi` | Konsultasi | Form 20 pertanyaan Ya/Tidak dalam 3 kelompok + progres |
+| `#konsultasi` | Konsultasi | Pemilih jenis perangkat + form pertanyaan Ya/Tidak yang relevan dalam 3 kelompok + progres |
 | `#hasil` | Hasil | Diagnosis berprioritas, langkah perbaikan, jejak iterasi, pohon alasan, unduh/cetak |
 | `#pengetahuan` | Basis Pengetahuan | Pemenuhan spesifikasi, tab Fakta, Aturan, Kesimpulan, Skenario, Sumber |
 | `#tentang` | Tentang | Metode, ruang lingkup, batasan, sumber, pernyataan penggunaan AI |
@@ -773,7 +773,8 @@ for cid in self.conclusions:
 [SISIPKAN GAMBAR]
 
 1. **Br-01 Beranda** — judul, statistik basis pengetahuan (20/31/10), tombol Mulai.
-2. **Br-02 Konsultasi** — form 20 pertanyaan, 3 kelompok, progres.
+2. **Br-02 Konsultasi** — pemilih jenis perangkat, pertanyaan relevan dalam 3 kelompok, progres.
+3. **Br-02a Mode audio** — pemilih “Earphone, headset, atau speaker”; F11 disembunyikan dan jumlah pertanyaan menjadi 19.
 3. **Br-03 Hasil H1** — kartu diagnosis prioritas 1, langkah perbaikan, jejak 2 iterasi.
 4. **Br-04 Pohon alasan** — R9 → K1 → R1 → F1 dan F14.
 5. **Br-05 Belum dapat disimpulkan** — skenario F7 dan saran baterai.

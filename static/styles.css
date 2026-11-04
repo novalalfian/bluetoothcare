@@ -1156,6 +1156,78 @@ code {
   min-width: 0;
 }
 
+.device-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 18px;
+  padding: 16px 20px;
+  margin-bottom: 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.device-copy {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+.device-copy label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.device-copy p {
+  margin: 4px 0 0;
+  font-size: 0.77rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.device-copy strong {
+  color: var(--ink-soft);
+}
+
+.device-field {
+  position: relative;
+  flex: 0 1 320px;
+  min-width: 210px;
+}
+
+.device-field::after {
+  content: "▾";
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.device-select {
+  width: 100%;
+  padding: 10px 38px 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.84rem;
+  appearance: none;
+  cursor: pointer;
+}
+
+.device-select:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
 .progress-card {
   position: sticky;
   top: calc(var(--header-height) + 14px);

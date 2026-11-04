@@ -1,6 +1,6 @@
 # BluetoothCare — Sistem Pakar Diagnosis Konektivitas Bluetooth pada Laptop
 
-Aplikasi web lokal untuk mendiagnosis awal gangguan konektivitas **earphone, speaker, keyboard, dan mouse Bluetooth** pada laptop **Windows 10/11**. Pengguna menjawab 20 pertanyaan Ya/Tidak, mesin **forward chaining** menelusuri 31 aturan JIKA–MAKA, lalu sistem menampilkan diagnosis berurutan prioritas, langkah perbaikan, dan **jejak penalaran per iterasi**.
+Aplikasi web lokal untuk mendiagnosis awal gangguan konektivitas **earphone, speaker, keyboard, dan mouse Bluetooth** pada laptop **Windows 10/11**. Pengguna memilih jenis perangkat lebih dulu, menjawab pertanyaan Ya/Tidak yang relevan, lalu mesin **forward chaining** menelusuri 31 aturan JIKA–MAKA dan menampilkan diagnosis berurutan prioritas, langkah perbaikan, serta **jejak penalaran per iterasi**. Pertanyaan yang tidak relevan dengan jenis perangkat disembunyikan dan otomatis dianggap **Tidak**.
 
 Proyek ini disusun mengacu pada PRD *Sistem Pakar Diagnosis Gangguan Konektivitas Perangkat Bluetooth (Earphone, Speaker, Keyboard) pada Laptop* versi 2.0 untuk UTS Sistem Pakar (TI22604).
 
@@ -12,6 +12,7 @@ Proyek ini disusun mengacu pada PRD *Sistem Pakar Diagnosis Gangguan Konektivita
 | --- | --- | --- |
 | FR-01 Halaman pembuka | ✅ | Beranda dengan judul, deskripsi, batasan, dan tombol Mulai Konsultasi |
 | FR-02 Form 20 fakta Ya/Tidak, 3 kelompok | ✅ | Kelompok Laptop & sistem, Perangkat Bluetooth, Lingkungan & sinyal |
+| FR-02a Pemilih jenis perangkat | ✅ | Earphone/headset/speaker, keyboard/mouse, atau semua; pertanyaan tidak relevan disembunyikan dan dianggap “Tidak” |
 | FR-03 Validasi masukan | ✅ | Semua pertanyaan wajib dijawab; pesan menyebut kode yang belum dijawab |
 | FR-04 Basis pengetahuan JSON terpisah | ✅ | `knowledge_base.json`, dimuat oleh `KnowledgeBase` |
 | FR-05 Forward chaining berulang sampai stabil | ✅ | Siklus berhenti saat tidak ada aturan baru aktif |
@@ -130,7 +131,7 @@ Untuk demo cepat tanpa deploy, lihat bagian Cloudflare Tunnel/ngrok di `DEPLOY.m
 ## 4. Alur demonstrasi (di bawah 5 menit)
 
 1. **Beranda** — jelaskan tujuan, batasan, dan angka basis pengetahuan (20/31/10).
-2. **Konsultasi** — tunjukkan tiga kelompok pertanyaan dan validasi saat tombol Proses ditekan tanpa menjawab.
+2. **Konsultasi** — tunjukkan pemilih jenis perangkat, tiga kelompok pertanyaan, dan validasi saat tombol Proses ditekan tanpa menjawab. Pilih “Earphone, headset, atau speaker” untuk melihat F11 disembunyikan, atau “Keyboard atau mouse” untuk melihat F5, F8, dan F18 disembunyikan.
 3. Isi skenario **F1 + F14** (Bluetooth laptop tidak bisa diaktifkan dan pairing ulang tetap gagal), jawab pertanyaan lain **Tidak**.
 4. **Hasil** — tunjukkan diagnosis **H1** berprioritas 1, langkah perbaikan, waktu inferensi, dan iterasi.
 5. Buka **“Mengapa diagnosis ini muncul?”** — tunjukkan R1 → K1 dan R9 → H1 beserta fakta pendukung.
@@ -373,7 +374,9 @@ Hasil terakhir: **30 pengujian lulus**, mencakup:
 - API, header keamanan, penyajian aset statis,
 - penulisan log tanpa data pribadi.
 
-Verifikasi browser juga dilakukan selama pengembangan: **21 pemeriksaan lulus** (alur H1, unduhan TXT, mode cetak, muat ulang hasil, alur F7, tabel pengetahuan, dan menu seluler), tanpa error runtime JavaScript. Tampilan desktop dan ponsel diperiksa melalui tangkapan layar.
+Verifikasi browser juga dilakukan selama pengembangan: **35 pemeriksaan lulus** (alur H1, pemilih jenis perangkat, unduhan TXT, mode cetak, muat ulang hasil, alur F7, tabel pengetahuan, dan menu seluler), tanpa error runtime JavaScript. Tampilan desktop dan ponsel diperiksa melalui tangkapan layar.
+
+Pengujian DOM (jsdom) mencakup **50 pemeriksaan**, termasuk filter jenis perangkat, dan seluruhnya lulus tanpa error runtime JavaScript.
 
 Rincian: [`docs/HASIL_UJI.md`](docs/HASIL_UJI.md).
 
