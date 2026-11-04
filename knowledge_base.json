@@ -5,12 +5,12 @@
     "subtitle": "Diagnosis awal gangguan earphone, speaker, dan keyboard Bluetooth di Windows 10/11",
     "course": "Sistem Pakar (TI22604) — UTS Semester Ganjil 2026/2027",
     "author": "(isi NIM dan nama)",
-    "version": "2.1",
-    "updated": "2026-11-03",
+    "version": "2.2",
+    "updated": "2026-11-04",
     "method": "Forward Chaining",
     "platform": "Windows 10/11",
     "disclaimer": "Hasil sistem adalah diagnosis awal, bukan pengganti pemeriksaan teknisi. Sistem tidak mengubah pengaturan laptop secara otomatis dan tidak mengumpulkan data pribadi.",
-    "description": "Pengguna menjawab 20 pertanyaan Ya/Tidak. Mesin inferensi menelusuri 31 aturan JIKA-MAKA secara berulang sampai tidak ada fakta baru, lalu menampilkan diagnosis berurutan prioritas beserta langkah perbaikan dan jejak penalaran. Basis aturan diperkuat sumber vendor, standar, dan literatur ilmiah (S1-S10).",
+    "description": "Pengguna menjawab 20 pertanyaan Ya/Tidak. Mesin inferensi menelusuri 31 aturan JIKA-MAKA secara berulang sampai tidak ada fakta baru, lalu menampilkan diagnosis berurutan prioritas beserta langkah perbaikan dan jejak penalaran. Basis aturan diperkuat sumber vendor, standar, dan literatur ilmiah (9 sumber: S1, S2, S4-S10).",
     "groups": [
       {
         "id": "laptop",
@@ -674,15 +674,6 @@
       "accessed": "",
       "status": "perlu_dilengkapi",
       "contribution": "Mode pairing, arti indikator lampu, perilaku baterai, dan prosedur pairing ulang."
-    },
-    {
-      "id": "S3",
-      "title": "Wawancara teknisi komputer",
-      "publisher": "Isi nama dan tanggal wawancara",
-      "url": "",
-      "accessed": "",
-      "status": "perlu_dilengkapi",
-      "contribution": "Validasi aturan, urutan prioritas diagnosis, dan penyesuaian bahasa untuk pengguna awam."
     },
     {
       "id": "S4",

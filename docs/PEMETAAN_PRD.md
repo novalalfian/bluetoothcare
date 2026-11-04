@@ -16,7 +16,7 @@ Dokumen ini menghubungkan setiap kebutuhan pada PRD versi 2.0 dengan berkas, fun
 | FR-08 | Fasilitas penjelasan | `trace[]`, `working_memory`, `_build_derivation()`; `renderTrace()`, `renderCause()` | Tabel iterasi, fakta masukan, K/H, pohon alasan JIKA–MAKA |
 | FR-09 | “Belum dapat disimpulkan” | Cabang `inconclusive` di `run_inference()`; panel di `renderResult()` | Skenario F7 saja menampilkan pesan, F7, dan saran baterai |
 | FR-10 | Konsultasi ulang | `reconsult()` di `static/app.js`; tombol atas & bawah | Form kosong, progres 0/20, `sessionStorage` dihapus |
-| FR-11 | Daftar aturan/fakta | `GET /api/knowledge`; tab `#view-pengetahuan`; `renderFactsTable()`, `renderRulesTable()`, `renderConclusions()`, `renderScenarios()`, `renderSources()` | Tab menampilkan 20 fakta, 31 aturan, 19 kesimpulan, 13 skenario, 10 sumber |
+| FR-11 | Daftar aturan/fakta | `GET /api/knowledge`; tab `#view-pengetahuan`; `renderFactsTable()`, `renderRulesTable()`, `renderConclusions()`, `renderScenarios()`, `renderSources()` | Tab menampilkan 20 fakta, 31 aturan, 19 kesimpulan, 13 skenario, 9 sumber |
 | FR-12 | Ekspor PDF/teks | `buildTextReport()` + `downloadResult()`; `@media print` + `printResult()` | Tombol Unduh `.txt` dan Cetak/PDF |
 | FR-13 | Log konsultasi lokal | `AppHandler._write_log()`; `logs/konsultasi.jsonl`; opsi `--no-log` | Setelah konsultasi, file JSONL bertambah; hanya gejala/hasil, tanpa nama/IP |
 
@@ -41,7 +41,7 @@ Dokumen ini menghubungkan setiap kebutuhan pada PRD versi 2.0 dengan berkas, fun
 | Aturan | 15+ | 31 | `len(kb.rules)` |
 | AND/OR | Wajib | R3, R14, R22 dan lainnya | `eval_premise`, label `R14 = F7 DAN (F5 ATAU F11)` |
 | Skenario uji | 5+ | 13 | `meta.test_scenarios` + `test_all_prd_scenarios` |
-| Sumber | 2+ | 10 (S1–S10) | Tab Sumber; S1, S4–S10 terverifikasi, S2/S3 masih perlu identitas lengkap |
+| Sumber | 2+ | 9 (S1, S2, S4–S10) | Tab Sumber; S1, S4–S10 terverifikasi, S2 masih perlu identitas lengkap |
 
 Pemeriksaan konsistensi otomatis:
 
@@ -99,7 +99,7 @@ Graf ini juga dapat diperiksa pada data `rules` dan pohon `derivation` di halama
 | Komponen rubrik (bobot) | Bukti |
 | --- | --- |
 | Analisis kasus (8) | Bab 1–3 PRD; bagian “Latar belakang” dan “Batasan” di aplikasi |
-| Akuisisi pengetahuan (12) | 10 sumber di `knowledge_base.json` (vendor, standar, dan jurnal: S5 Springer, S6 Intel, S7 NIST, S8 Bluetooth SIG, S9 IEEE, S10 Microsoft Learn); status verifikasi pada tab Sumber; placeholder S2/S3 untuk dilengkapi |
+| Akuisisi pengetahuan (12) | 9 sumber di `knowledge_base.json` (vendor, standar, dan jurnal: S5 Springer, S6 Intel, S7 NIST, S8 Bluetooth SIG, S9 IEEE, S10 Microsoft Learn); status verifikasi pada tab Sumber; placeholder S2 untuk dilengkapi |
 | Basis pengetahuan (17) | 20 fakta, 9 K, 10 H, 31 aturan; validasi konsistensi otomatis; uji minimum |
 | Representasi pengetahuan (8) | Graf dependensi di atas; premis bersarang JSON; label aturan |
 | Mesin inferensi (20) | `inference_engine.py`; pseudocode di README; tabel iterasi di halaman hasil |
@@ -113,7 +113,7 @@ Graf ini juga dapat diperiksa pada data `rules` dan pohon `derivation` di halama
 | Risiko PRD | Mitigasi yang sudah ada |
 | --- | --- |
 | Judul terlalu umum | Judul membatasi platform Windows 10/11 dan perangkat audio/input |
-| Sumber tidak terdokumentasi | Setiap aturan memiliki `source` (S1–S10); tab sumber menampilkan status |
+| Sumber tidak terdokumentasi | Setiap aturan memiliki `source` (S1, S2, S4–S10); tab sumber menampilkan status |
 | Beberapa diagnosis muncul bersamaan | Pengurutan prioritas + penjelasan per diagnosis + catatan bahwa prioritas tidak menghapus diagnosis lain |
 | Tidak memahami kode sendiri | Komentar modul/fungsi, pemisahan tanggung jawab, README berisi alur dan pseudocode |
 | Penggunaan AI tidak dinyatakan | Pernyataan AI di README, halaman Tentang, dan template laporan |
@@ -121,11 +121,11 @@ Graf ini juga dapat diperiksa pada data `rules` dan pohon `derivation` di halama
 ## 7. Deliverables yang perlu dilengkapi mahasiswa
 
 - [x] Aplikasi berjalan lokal
-- [x] Basis aturan JSON versi 2.1
+- [x] Basis aturan JSON versi 2.2
 - [x] 13 skenario uji otomatis
 - [x] Dokumentasi teknis
 - [ ] NIM/nama pada `meta.author` dan halaman Tentang
-- [ ] Identitas lengkap sumber S2 (merek/model manual) dan S3 (nama/tanggal wawancara)
+- [ ] Identitas lengkap sumber S2 (merek/model manual)
 - [ ] Laporan PDF `NIM_NamaLengkap_UTS_SistemPakar.pdf`
 - [ ] Video demonstrasi maksimal 5 menit
 - [ ] Bukti versi awal dan akhir basis aturan

@@ -66,7 +66,7 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(len(data["facts"]), 20)
         self.assertEqual(len(data["rules"]), 31)
         self.assertEqual(data["stats"]["final"], 10)
-        self.assertEqual(len(data["sources"]), 10)
+        self.assertEqual(len(data["sources"]), 9)
         self.assertTrue(all(item["met"] for item in data["compliance"]))
 
     def test_health_endpoint(self) -> None:

@@ -1,6 +1,6 @@
 # Hasil Pengujian
 
-**Tanggal pengujian:** 3 November 2026  
+**Tanggal pengujian:** 4 November 2026  
 **Lingkungan:** Windows, Python 3.15.0, browser modern (Chromium/Edge/Firefox)  
 **Perintah:**
 
@@ -117,7 +117,7 @@ H10 (Adaptor USB atau driver generik tidak kompatibel)
 
 | Pengujian | Hasil |
 | --- | --- |
-| `GET /api/knowledge` | 200, JSON, 20 fakta, 31 aturan, 10 sumber, seluruh pemeriksaan spesifikasi `met` |
+| `GET /api/knowledge` | 200, JSON, 20 fakta, 31 aturan, 9 sumber, seluruh pemeriksaan spesifikasi `met` |
 | `GET /api/health` | 200, `status: ok`, `rules: 31` |
 | `GET /` | 200, HTML memuat “BluetoothCare” |
 | `GET /styles.css`, `/app.js`, `/favicon.svg` | 200 dengan MIME type sesuai |
@@ -144,7 +144,7 @@ Checklist berikut telah diverifikasi pada Chromium headless (Playwright) dengan 
 - [x] Detail “Mengapa diagnosis ini muncul?” menampilkan R1 → K1 dan R9 → H1.
 - [x] Skenario F7 saja menampilkan “Belum dapat disimpulkan” + saran baterai.
 - [x] Konsultasi ulang mengosongkan form dan hasil.
-- [x] Tab basis pengetahuan menampilkan 20 fakta, 31 aturan, 19 kesimpulan, 13 skenario, 10 sumber.
+- [x] Tab basis pengetahuan menampilkan 20 fakta, 31 aturan, 19 kesimpulan, 13 skenario, 9 sumber.
 - [x] Tombol Unduh .txt menghasilkan berkas; Cetak/PDF menampilkan halaman bersih tanpa navigasi.
 - [x] Menu seluler dapat dibuka/ditutup, dan navigasi hash berfungsi.
 - [x] Muat ulang halaman saat berada di `#hasil` mempertahankan hasil dari `sessionStorage`.

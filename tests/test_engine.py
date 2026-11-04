@@ -68,6 +68,7 @@ class TestKnowledgeBase(EngineTestCase):
 
     def test_literature_sources_are_complete(self) -> None:
         by_id = {source["id"]: source for source in self.kb.sources}
+        self.assertNotIn("S3", by_id, "S3 (wawancara pakar) tidak dipakai lagi")
         for source_id in ("S5", "S6", "S7", "S8", "S9", "S10"):
             with self.subTest(source=source_id):
                 source = by_id[source_id]

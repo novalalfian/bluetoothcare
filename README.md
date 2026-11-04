@@ -50,7 +50,7 @@ Spesifikasi minimum soal UTS:
 .
 ├── app.py                  # Pengendali HTTP (API + berkas statis), tanpa Flask
 ├── inference_engine.py     # Mesin forward chaining, validasi, jejak, pohon alasan
-├── knowledge_base.json     # 20 fakta, 31 aturan, 19 kesimpulan, 10 sumber, 13 skenario
+├── knowledge_base.json     # 20 fakta, 31 aturan, 19 kesimpulan, 9 sumber, 13 skenario
 ├── jalankan.bat            # Klik dua kali untuk menjalankan di Windows
 ├── static/
 │   ├── index.html          # Beranda, konsultasi, hasil, basis pengetahuan, tentang
@@ -235,13 +235,12 @@ Pada antarmuka, tabel aturan dikelompokkan menurut kesimpulan (MAKA). Satu kesim
 
 ### Sumber pengetahuan (S)
 
-Basis aturan ditopang 10 sumber: dokumentasi vendor, standar, dan literatur ilmiah. Setiap aturan menunjuk satu sumber melalui field `"source"`.
+Basis aturan ditopang 9 sumber: dokumentasi vendor, standar, dan literatur ilmiah. Setiap aturan menunjuk satu sumber melalui field `"source"`. Nomor S3 tidak dipakai karena wawancara pakar tidak dilakukan; nomor sumber lain dipertahankan agar rujukan pada aturan tidak berubah.
 
 | ID | Sumber | Jenis | Status |
 | --- | --- | --- | --- |
 | S1 | Fix Bluetooth problems in Windows — Microsoft Support | Dokumentasi vendor | Terverifikasi |
 | S2 | Buku manual perangkat Bluetooth (earphone, speaker, keyboard) | Manual pabrikan | Perlu dilengkapi |
-| S3 | Wawancara teknisi komputer | Akuisisi pakar | Perlu dilengkapi |
 | S4 | Bluetooth Core Specification — operasi pita 2,4 GHz — Bluetooth SIG | Standar | Terverifikasi |
 | S5 | Interference Evaluation of Bluetooth and IEEE 802.11b Systems — Wireless Networks, Springer (2003) | Jurnal | Terverifikasi |
 | S6 | USB 3.0 Radio Frequency Interference Impact on 2.4 GHz Wireless Devices — Intel/USB-IF (white paper 327216-001, 2012) | White paper industri | Terverifikasi |
@@ -391,7 +390,7 @@ Kode inferensi tidak perlu diubah (FR-04). Jika menambah fakta, form, progres, d
 ### Sebelum pengumpulan tugas
 
 - Isi `meta.author` pada `knowledge_base.json` dan halaman Tentang dengan **NIM + nama**.
-- Lengkapi sumber **S2** (merek/model manual perangkat) dan **S3** (nama, tanggal, ringkasan wawancara). Status “Perlu dilengkapi” terlihat pada tab Sumber. Sumber literatur **S5–S10** sudah terverifikasi dan siap dikutip di laporan.
+- Lengkapi sumber **S2** (merek/model manual perangkat). Status “Perlu dilengkapi” terlihat pada tab Sumber. Sumber literatur **S5–S10** sudah terverifikasi dan siap dikutip di laporan. Wawancara pakar tidak dilakukan, sehingga S3 dihapus dan validasi aturan bersandar pada validasi silang antarsumber serta pemeriksaan konsistensi basis pengetahuan.
 - Ganti placeholder `(isi NIM dan nama)` pada `static/index.html` bila diperlukan.
 - Simpan versi awal dan akhir basis aturan sebagai bukti proses.
 - Cantumkan pernyataan penggunaan AI pada laporan akhir.
@@ -431,4 +430,4 @@ Struktur dokumen, kode, dan sebagian teks dibantu oleh AI. Penulis bertanggung j
 
 **Mata kuliah:** Sistem Pakar (TI22604) · UTS Semester Ganjil 2026/2027  
 **Metode:** Forward Chaining · **Platform:** Windows 10/11 · localhost  
-**Versi aplikasi:** 2.1
+**Versi aplikasi:** 2.2
