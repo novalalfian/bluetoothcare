@@ -62,7 +62,9 @@ Spesifikasi minimum soal UTS:
 │   └── test_api.py         # 13 pengujian integrasi HTTP
 ├── docs/
 │   ├── PEMETAAN_PRD.md     # Keterlacakan kebutuhan PRD ke kode
-│   └── HASIL_UJI.md        # Tabel hasil pengujian dan cara memverifikasi
+│   ├── HASIL_UJI.md        # Tabel hasil pengujian dan cara memverifikasi
+│   ├── LAPORAN_UTS.md      # Draf laporan UTS lengkap
+│   └── BAB5_PENGUJIAN_DAN_PEMBAHASAN.md  # Draf khusus Bab 5
 ├── logs/                   # Dibuat otomatis saat konsultasi pertama
 ├── requirements.txt        # Kosong: hanya pustaka standar Python
 ├── Dockerfile              # Image untuk deploy online

@@ -486,7 +486,8 @@ Aplikasi **tidak memakai dependensi eksternal**; `requirements.txt` sengaja koso
 ├── docs/
 │   ├── PEMETAAN_PRD.md     # Keterlacakan kebutuhan ke kode
 │   ├── HASIL_UJI.md        # Tabel hasil pengujian
-│   └── LAPORAN_UTS.md      # Dokumen ini
+│   ├── LAPORAN_UTS.md      # Dokumen laporan utama
+│   └── BAB5_PENGUJIAN_DAN_PEMBAHASAN.md  # Draf khusus Bab 5
 ├── requirements.txt        # Kosong: hanya pustaka standar
 ├── Dockerfile, render.yaml, Procfile, DEPLOY.md, README.md
 ```
