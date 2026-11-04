@@ -42,7 +42,7 @@ Dokumen ini menghubungkan setiap kebutuhan pada PRD versi 2.0 dengan berkas, fun
 | Aturan | 15+ | 31 | `len(kb.rules)` |
 | AND/OR | Wajib | R3, R14, R22 dan lainnya | `eval_premise`, label `R14 = F7 DAN (F5 ATAU F11)` |
 | Skenario uji | 5+ | 13 | `meta.test_scenarios` + `test_all_prd_scenarios` |
-| Sumber | 2+ | 9 (S1, S2, S4–S10) | Tab Sumber; S1, S4–S10 terverifikasi, S2 masih perlu identitas lengkap |
+| Sumber | 2+ | 9 (S1, S2, S4–S10) | Tab Sumber; seluruh sumber terverifikasi, termasuk S2 (manual Sony WH-1000XM4 dan Logitech K380) |
 
 Pemeriksaan konsistensi otomatis:
 
@@ -100,7 +100,7 @@ Graf ini juga dapat diperiksa pada data `rules` dan pohon `derivation` di halama
 | Komponen rubrik (bobot) | Bukti |
 | --- | --- |
 | Analisis kasus (8) | Bab 1–3 PRD; bagian “Latar belakang” dan “Batasan” di aplikasi |
-| Akuisisi pengetahuan (12) | 9 sumber di `knowledge_base.json` (vendor, standar, dan jurnal: S5 Springer, S6 Intel, S7 NIST, S8 Bluetooth SIG, S9 IEEE, S10 Microsoft Learn); status verifikasi pada tab Sumber; placeholder S2 untuk dilengkapi |
+| Akuisisi pengetahuan (12) | 9 sumber di `knowledge_base.json` (vendor, standar, jurnal, dan manual perangkat: S1 Microsoft, S2 Sony/Logitech, S4 Bluetooth SIG, S5 Springer, S6 Intel, S7 NIST, S8 Bluetooth SIG, S9 IEEE, S10 Microsoft Learn); seluruhnya berstatus terverifikasi pada tab Sumber |
 | Basis pengetahuan (17) | 20 fakta, 9 K, 10 H, 31 aturan; validasi konsistensi otomatis; uji minimum |
 | Representasi pengetahuan (8) | Graf dependensi di atas; premis bersarang JSON; label aturan |
 | Mesin inferensi (20) | `inference_engine.py`; pseudocode di README; tabel iterasi di halaman hasil |
@@ -126,7 +126,7 @@ Graf ini juga dapat diperiksa pada data `rules` dan pohon `derivation` di halama
 - [x] 13 skenario uji otomatis
 - [x] Dokumentasi teknis
 - [ ] NIM/nama pada `meta.author` dan halaman Tentang
-- [ ] Identitas lengkap sumber S2 (merek/model manual)
+- [x] Identitas lengkap sumber S2 (merek/model manual)
 - [ ] Laporan PDF `NIM_NamaLengkap_UTS_SistemPakar.pdf`
 - [ ] Video demonstrasi maksimal 5 menit
 - [ ] Bukti versi awal dan akhir basis aturan

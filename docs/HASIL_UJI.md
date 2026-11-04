@@ -150,9 +150,9 @@ Checklist berikut telah diverifikasi pada Chromium headless (Playwright) dengan 
 - [x] Menu seluler dapat dibuka/ditutup, dan navigasi hash berfungsi.
 - [x] Muat ulang halaman saat berada di `#hasil` mempertahankan hasil dari `sessionStorage`.
 
-**Hasil verifikasi browser:** 35 pemeriksaan lulus, tanpa error runtime JavaScript. Pemeriksaan mencakup tombol submit aktif setelah basis pengetahuan dimuat, alur H1, pemilih jenis perangkat (audio dan keyboard/mouse), unduhan TXT (nama berkas dan isi), mode cetak, konsultasi ulang, alur F7, tabel pengetahuan, dan menu seluler. Tampilan desktop 1440×1000 serta ponsel 390×844 juga diperiksa melalui tangkapan layar.
+**Hasil verifikasi browser:** 36 pemeriksaan lulus, tanpa error runtime JavaScript. Pemeriksaan mencakup tombol submit aktif setelah basis pengetahuan dimuat, alur H1, pemilih jenis perangkat (audio dan keyboard/mouse), unduhan TXT (nama berkas dan isi), mode cetak, konsultasi ulang, alur F7, tabel pengetahuan, sumber terverifikasi, dan menu seluler. Tampilan desktop 1440×1000 serta ponsel 390×844 juga diperiksa melalui tangkapan layar.
 
-Pengujian DOM terpisah (jsdom) juga dijalankan: 50 pemeriksaan lulus, mencakup 20 pertanyaan, filter jenis perangkat, validasi kosong, alur H1, konsultasi ulang, alur F7, tab pengetahuan, dan menu seluler — tanpa error runtime JavaScript.
+Pengujian DOM terpisah (jsdom) juga dijalankan: 51 pemeriksaan lulus, mencakup 20 pertanyaan, filter jenis perangkat, validasi kosong, alur H1, konsultasi ulang, alur F7, tab pengetahuan, sumber terverifikasi, dan menu seluler — tanpa error runtime JavaScript.
 
 ---
 
@@ -162,8 +162,9 @@ Pengujian DOM terpisah (jsdom) juga dijalankan: 50 pemeriksaan lulus, mencakup 2
 - Seluruh kebutuhan opsional (FR-11–FR-13) juga diimplementasikan.
 - Seluruh 13 skenario sesuai (100%).
 - Seluruh 30 pengujian otomatis lulus.
-- Seluruh 35 pemeriksaan browser lulus tanpa error runtime JavaScript.
-- Seluruh 50 pemeriksaan DOM (jsdom) lulus, termasuk filter jenis perangkat.
+- Seluruh 36 pemeriksaan browser lulus tanpa error runtime JavaScript.
+- Seluruh 51 pemeriksaan DOM (jsdom) lulus, termasuk filter jenis perangkat.
+- Seluruh 9 sumber berstatus terverifikasi (S2 kini lengkap: manual Sony WH-1000XM4 dan Logitech K380).
 - Waktu inferensi jauh di bawah batas 1 detik.
 
 **Siap untuk demonstrasi lokal dan verifikasi kode.**

@@ -243,7 +243,7 @@ Basis aturan ditopang 9 sumber: dokumentasi vendor, standar, dan literatur ilmia
 | ID | Sumber | Jenis | Status |
 | --- | --- | --- | --- |
 | S1 | Fix Bluetooth problems in Windows — Microsoft Support | Dokumentasi vendor | Terverifikasi |
-| S2 | Buku manual perangkat Bluetooth (earphone, speaker, keyboard) | Manual pabrikan | Perlu dilengkapi |
+| S2 | Buku manual perangkat Bluetooth: Sony WH-1000XM4 dan Logitech K380 | Manual pabrikan | Terverifikasi |
 | S4 | Bluetooth Core Specification — operasi pita 2,4 GHz — Bluetooth SIG | Standar | Terverifikasi |
 | S5 | Interference Evaluation of Bluetooth and IEEE 802.11b Systems — Wireless Networks, Springer (2003) | Jurnal | Terverifikasi |
 | S6 | USB 3.0 Radio Frequency Interference Impact on 2.4 GHz Wireless Devices — Intel/USB-IF (white paper 327216-001, 2012) | White paper industri | Terverifikasi |
@@ -374,9 +374,9 @@ Hasil terakhir: **30 pengujian lulus**, mencakup:
 - API, header keamanan, penyajian aset statis,
 - penulisan log tanpa data pribadi.
 
-Verifikasi browser juga dilakukan selama pengembangan: **35 pemeriksaan lulus** (alur H1, pemilih jenis perangkat, unduhan TXT, mode cetak, muat ulang hasil, alur F7, tabel pengetahuan, dan menu seluler), tanpa error runtime JavaScript. Tampilan desktop dan ponsel diperiksa melalui tangkapan layar.
+Verifikasi browser juga dilakukan selama pengembangan: **36 pemeriksaan lulus** (alur H1, pemilih jenis perangkat, unduhan TXT, mode cetak, muat ulang hasil, alur F7, tabel pengetahuan, dan menu seluler), tanpa error runtime JavaScript. Tampilan desktop dan ponsel diperiksa melalui tangkapan layar.
 
-Pengujian DOM (jsdom) mencakup **50 pemeriksaan**, termasuk filter jenis perangkat, dan seluruhnya lulus tanpa error runtime JavaScript.
+Pengujian DOM (jsdom) mencakup **51 pemeriksaan**, termasuk filter jenis perangkat, dan seluruhnya lulus tanpa error runtime JavaScript.
 
 Rincian: [`docs/HASIL_UJI.md`](docs/HASIL_UJI.md).
 
@@ -395,7 +395,7 @@ Kode inferensi tidak perlu diubah (FR-04). Jika menambah fakta, form, progres, d
 ### Sebelum pengumpulan tugas
 
 - Isi `meta.author` pada `knowledge_base.json` dan halaman Tentang dengan **NIM + nama**.
-- Lengkapi sumber **S2** (merek/model manual perangkat). Status “Perlu dilengkapi” terlihat pada tab Sumber. Sumber literatur **S5–S10** sudah terverifikasi dan siap dikutip di laporan. Wawancara pakar tidak dilakukan, sehingga S3 dihapus dan validasi aturan bersandar pada validasi silang antarsumber serta pemeriksaan konsistensi basis pengetahuan.
+- Seluruh sumber **S1, S2, S4–S10** sudah terverifikasi dan siap dikutip di laporan. S2 memakai manual **Sony WH-1000XM4** dan **Logitech K380**. Wawancara pakar tidak dilakukan, sehingga S3 dihapus dan validasi aturan bersandar pada validasi silang antarsumber serta pemeriksaan konsistensi basis pengetahuan.
 - Ganti placeholder `(isi NIM dan nama)` pada `static/index.html` bila diperlukan.
 - Simpan versi awal dan akhir basis aturan sebagai bukti proses.
 - Cantumkan pernyataan penggunaan AI pada laporan akhir.

@@ -668,12 +668,12 @@
     },
     {
       "id": "S2",
-      "title": "Buku manual perangkat Bluetooth (earphone, speaker, keyboard)",
-      "publisher": "Manual pabrikan — isi merek dan model",
-      "url": "",
-      "accessed": "",
-      "status": "perlu_dilengkapi",
-      "contribution": "Mode pairing, arti indikator lampu, perilaku baterai, dan prosedur pairing ulang."
+      "title": "Buku manual perangkat Bluetooth: Sony WH-1000XM4 dan Logitech K380",
+      "publisher": "Sony Corporation & Logitech",
+      "url": "https://helpguide.sony.net/mdr/wh1000xm4/v1/en/index.html",
+      "accessed": "2026-11-05",
+      "status": "terverifikasi",
+      "contribution": "Mode pairing, arti indikator lampu, perilaku baterai lemah, prosedur pairing ulang, dan keluaran audio (Sony WH-1000XM4); indikator status dan pairing ulang keyboard Bluetooth (Logitech K380, support.logi.com/hc/en-us/articles/360024158554)."
     },
     {
       "id": "S4",

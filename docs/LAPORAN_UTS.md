@@ -132,7 +132,7 @@ Akuisisi pengetahuan dilakukan melalui empat jalur:
 | ID | Sumber | Jenis | Status |
 | --- | --- | --- | --- |
 | S1 | Microsoft Support, *Fix Bluetooth problems in Windows*. https://support.microsoft.com/en-us/windows/hardware/bluetooth/fix-bluetooth-problems-in-windows (diakses 2 Nov 2026) | Dokumentasi vendor | Terverifikasi |
-| S2 | Buku manual perangkat Bluetooth (earphone/speaker/keyboard). [ISI: merek dan model] | Manual pabrikan | Perlu dilengkapi |
+| S2 | Sony Corporation, *WH-1000XM4 Help Guide*; Logitech, *K380 Multi-Device Keyboard Setup Guide*. https://helpguide.sony.net/mdr/wh1000xm4/v1/en/index.html (diakses 5 Nov 2026) | Manual pabrikan | Terverifikasi |
 | S4 | Bluetooth SIG, *Bluetooth Core Specification — operasi pita 2,4 GHz*. https://www.bluetooth.com/specifications/specs/ (diakses 2 Nov 2026) | Standar | Terverifikasi |
 | S5 | N. Golmie dkk., "Interference Evaluation of Bluetooth and IEEE 802.11b Systems," *Wireless Networks*, Springer, 2003. https://link.springer.com/article/10.1023/A:1022821110023 | Jurnal | Terverifikasi |
 | S6 | Intel Corporation / USB-IF, *USB 3.0 Radio Frequency Interference Impact on 2.4 GHz Wireless Devices*, white paper 327216-001, 2012. https://www.usb.org/sites/default/files/327216.pdf | White paper industri | Terverifikasi |
@@ -670,7 +670,7 @@ Pengembangan berikutnya sebaiknya menambah variasi skenario, melakukan pengujian
 6. Bluetooth SIG. (2026). *LE Audio*. Diakses 3 November 2026 dari https://www.bluetooth.com/learn-about-bluetooth/recent-enhancements/le-audio/
 7. Cordeiro, C. M., Abhyankar, S., Toshiwal, R., & Agrawal, D. P. (2003). Interference Modeling and Performance of Bluetooth MAC Protocol. *IEEE Transactions on Wireless Communications*. https://ieeexplore.ieee.org/document/1244801
 8. Microsoft Learn. (2021). *Bluetooth power management for modern standby platforms*. Diakses 3 November 2026 dari https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/bluetooth-power-management-for-modern-standby-platforms
-9. [ISI: manual perangkat S2 — merek/model]
+9. Sony Corporation. (2020). *WH-1000XM4 Help Guide*. Diakses 5 November 2026 dari https://helpguide.sony.net/mdr/wh1000xm4/v1/en/index.html; Logitech. (2021). *K380 Multi-Device Keyboard Setup Guide*. https://support.logi.com/hc/en-us/articles/360024158554
 
 ---
 
@@ -683,7 +683,7 @@ Pengembangan berikutnya sebaiknya menambah variasi skenario, melakukan pengujian
 | Fakta | Sumber utama |
 | --- | --- |
 | F1, F10, F12 | S1 (Microsoft Support), S10 |
-| F2, F3, F4, F7, F9, F11, F13, F14 | S2 (manual perangkat), S7 (NIST) |
+| F2, F3, F4, F7, F9, F11, F13, F14 | S2 (manual Sony WH-1000XM4 dan Logitech K380), S7 (NIST) |
 | F5, F6 | S4 (Bluetooth SIG) |
 | F8 | S1 |
 | F15 | S6 (Intel USB 3.0) |
@@ -697,13 +697,15 @@ Pengembangan berikutnya sebaiknya menambah variasi skenario, melakukan pengujian
 
 Seluruh 31 aturan mencantumkan `source`. Contoh jalur berbasis literatur: R20/R26 → S6, R22/R28 → S5, R23/R29 → S9, R24/R30 → S8, R25/R31 → S10, R16 → S7.
 
-**A.3 Catatan manual perangkat (S2)** — [ISI: merek/model]
+**A.3 Catatan manual perangkat (S2) — Sony WH-1000XM4 dan Logitech K380**
 
 | Aspek | Keterangan |
 | --- | --- |
-| Mode pairing | Tekan/tahan tombol 3–5 detik sampai lampu berkedip cepat (F13) |
-| Arti indikator | Kedip cepat = siap pairing; menyala tetap = tersambung |
-| Baterai | [ISI: ambang baterai perangkat] |
+| Mode pairing | WH-1000XM4: tahan tombol daya ±7 detik sampai indikator biru berkedip dua kali; K380: tahan tombol Easy-Switch 3 detik sampai LED berkedip cepat (F13) |
+| Arti indikator | Kedip cepat = siap pairing; menyala tetap = tersambung; merah = baterai lemah atau sedang diisi (F13, F7) |
+| Baterai | WH-1000XM4: indikator merah berkedip ±15 detik saat daya ≤10%; K380: indikator baterai pada keyboard (F7) |
+| Pairing ulang | Hapus/abaikan perangkat pada pengaturan Bluetooth laptop, lalu ulangi mode pairing (F4) |
+| Keluaran audio | Periksa profil A2DP/HFP dan pemilihan output audio default Windows (F5, F8) |
 
 ### Lampiran B — Source Code Penting
 
