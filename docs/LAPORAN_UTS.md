@@ -369,7 +369,7 @@ Sistem memakai pemisahan tanggung jawab berlapis: basis pengetahuan, mesin infer
 ┌──────────────────────────────────────────────┐
 │        BASIS PENGETAHUAN (knowledge_base.json)│
 │  meta, facts[20], conclusions[19], rules[31], │
-│  sources[10]                                  │
+│  sources[9]                                   │
 └──────────────────────────────────────────────┘
 ```
 
@@ -553,8 +553,8 @@ Catatan penting: kesimpulan disimpan di memori kerja sebagai **himpunan**, jadi 
 
 ## 7. Bab 5 Pengujian dan Pembahasan
 
-**Tanggal pengujian:** 4 November 2026
-**Lingkungan:** Windows, Python 3.15.0, PyTest tidak dipakai (memakai `unittest`), browser Chromium/Edge.
+**Tanggal pengujian:** 4 November 2026  
+**Lingkungan:** Windows, Python 3.15.0, PyTest tidak dipakai (memakai `unittest`), browser Chromium/Edge.  
 **Perintah:**
 
 ```powershell
