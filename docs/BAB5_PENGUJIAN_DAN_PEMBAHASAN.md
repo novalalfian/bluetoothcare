@@ -97,7 +97,8 @@ Angka **100%** menunjukkan konsistensi internal antara basis aturan, mesin infer
 3. **Tidak ada pengujian lapangan** — sistem belum diuji pada perangkat Bluetooth nyata dalam jumlah kasus yang memadai.
 4. **Jawaban pengguna bersifat mandiri** — jawaban yang keliru akan menghasilkan diagnosis yang keliru.
 5. **Cakupan terbatas** — hanya Windows 10/11 dan perangkat audio/input Bluetooth.
-6. **Belum ada uji usability formal** — kemudahan penggunaan baru dinilai secara kualitatif.
+6. **Belum ada uji usability formal** - kemudahan penggunaan baru dinilai secara kualitatif.
+7. **Filter jenis perangkat belum diuji terpisah** - pemilih perangkat adalah fitur antarmuka; pengujian otomatis memastikan pertanyaan tersembunyi dikirim sebagai `Tidak`, tetapi pemetaan audio/keyboard-mouse belum dinilai oleh pengguna nyata atau pakar.
 
 ### 5.4.3 Implikasi
 
