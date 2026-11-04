@@ -554,19 +554,35 @@ Catatan penting: kesimpulan disimpan di memori kerja sebagai **himpunan**, jadi 
 
 ## 7. Bab 5 Pengujian dan Pembahasan
 
-**Tanggal pengujian:** 4 November 2026  
-**Lingkungan:** Windows, Python 3.15.0, PyTest tidak dipakai (memakai `unittest`), browser Chromium/Edge.  
-**Perintah:**
+Bab ini membatasi pembahasan pada empat aspek: skenario pengujian, hasil pengujian, tingkat kesesuaian, dan evaluasi.
 
-```powershell
-python -m unittest discover -s tests -v
-```
+### 5.1 Skenario Pengujian
 
-**Hasil:** `Ran 30 tests ... OK`.
+Pengujian dilakukan dengan 13 skenario diagnosis. Setiap skenario dijalankan dengan seluruh 20 fakta dijawab; hanya fakta yang tercantum pada kolom **Fakta masukan** yang bernilai **Ya**, sedangkan sisanya **Tidak**.
 
-### 5.1 Pengujian Skenario
+| No | Fakta masukan | Hasil yang diharapkan |
+| --- | --- | --- |
+| 1 | F1, F14 | H1 — Driver atau layanan Bluetooth bermasalah |
+| 2 | F2, F13 | H2 — Perangkat belum mode pairing atau tersambung ke perangkat lain |
+| 3 | F5, F6 | H3 — Interferensi atau jarak/penghalang |
+| 4 | F8 | H5 — Output audio default belum diarahkan ke perangkat |
+| 5 | F3, F4 | H6 — Data pairing lama rusak |
+| 6 | F7, F11 | H4 — Baterai perangkat lemah |
+| 7 | F7 saja | Belum dapat disimpulkan (inconclusive) |
+| 8 | F15, F4 | H10 — Adaptor USB atau driver generik tidak kompatibel |
+| 9 | F16, F5 | H9 — Kanal 2,4 GHz padat |
+| 10 | F18 | H8 — Profil atau codec audio tidak sesuai |
+| 11 | F19 | H7 — Manajemen daya mematikan adaptor |
+| 12 | F20, F14 | H10 — Adaptor USB atau driver generik tidak kompatibel |
+| 13 | F17, F11 | H9 — Kanal 2,4 GHz padat |
 
-Setiap skenario dijalankan dengan seluruh 20 fakta dijawab; hanya fakta pada kolom masukan yang bernilai **Ya**.
+Skenario 7 sengaja dirancang sebagai kasus **tidak lengkap**: F7 saja tidak memenuhi premis aturan mana pun secara utuh, sehingga sistem harus berhenti tanpa memaksakan diagnosis.
+
+---
+
+### 5.2 Hasil Pengujian
+
+Seluruh skenario dijalankan pada 4 November 2026. Untuk setiap skenario, pengujian memeriksa status akhir, aturan yang berjalan, urutan iterasi, dan diagnosis yang dihasilkan.
 
 | No | Fakta masukan | Aturan berjalan | Iterasi | Hasil | Status |
 | --- | --- | --- | --- | --- | --- |
@@ -584,121 +600,60 @@ Setiap skenario dijalankan dengan seluruh 20 fakta dijawab; hanya fakta pada kol
 | 12 | F20, F14 | R21, R27 | 2 | H10 | diagnosed |
 | 13 | F17, F11 | R23, R29 | 2 | H9 | diagnosed |
 
-**Tingkat kesesuaian:** (13 skenario sesuai ÷ 13 skenario) × 100% = **100%**.
+### Catatan hasil
 
-Catatan skenario 7: sistem menampilkan F7 sebagai gejala terdeteksi, pesan "Belum dapat disimpulkan", serta saran mengisi ulang baterai dan memeriksa mode pairing.
+1. **Skenario 2** menghasilkan K2 melalui dua aturan, yaitu R3 (F13 ATAU F9) dan R4 (F2). K2 hanya ditambahkan sekali ke memori kerja karena memori kerja berupa himpunan. Kedua aturan tetap tercatat pada jejak; R3 mencatat `is_new = true`, sedangkan R4 mencatat `is_new = false`. Ini bukan duplikasi yang salah, melainkan dua jalur premis yang sah menuju kesimpulan yang sama.
+2. **Skenario 7** tidak menjalankan aturan apa pun. F7 tetap ditampilkan sebagai gejala terdeteksi, sistem menampilkan pesan “Belum dapat disimpulkan”, dan pengguna diberi saran mengisi ulang baterai serta memeriksa mode pairing.
+3. **Semua diagnosis yang muncul** sesuai dengan prioritas yang ditetapkan. Bila beberapa diagnosis muncul bersamaan, semuanya ditampilkan berurutan tanpa saling menghapus.
 
-### 5.2 Contoh Jejak Penalaran
+---
 
-**Skenario 1: F1 + F14 → H1**
+### 5.3 Tingkat Kesesuaian
 
-| Iterasi | Aturan | Premis | Kesimpulan | Status |
-| --- | --- | --- | --- | --- |
-| 1 | R1 | F1 | K1 | baru |
-| 2 | R9 | K1 DAN F14 | H1 | baru |
+Tingkat kesesuaian dihitung dari jumlah skenario yang keluarannya sama dengan harapan:
 
 ```text
-H1 (Driver atau layanan Bluetooth bermasalah)
-└─ R9: JIKA K1 DAN F14 MAKA H1
-   ├─ K1 (Adaptor Bluetooth laptop tidak siap)
-   │  └─ R1: JIKA F1 MAKA K1
-   │     └─ F1 (Pengaturan/tombol Bluetooth tidak bisa diaktifkan)
-   └─ F14 (Sudah dihapus dan dipasang ulang, masalah tetap ada)
+(13 skenario sesuai ÷ 13 skenario) × 100% = 100%
 ```
 
-**Skenario 8: F15 + F4 → H10 (jalur berbasis literatur)**
-
-| Iterasi | Aturan | Premis | Kesimpulan | Sumber |
-| --- | --- | --- | --- | --- |
-| 1 | R20 | F15 | K8 | S6 (Intel USB 3.0 RFI) |
-| 2 | R26 | K8 DAN F4 | H10 | S6 |
-
-### 5.3 Pengujian Mesin Inferensi
-
-| Pengujian | Skenario | Hasil |
-| --- | --- | --- |
-| Semua jawaban "Tidak" | 20 fakta false | Inconclusive, 0 aturan — lulus |
-| OR salah satu cukup | F7 + F5 atau F7 + F11 | H4 — lulus |
-| AND belum lengkap | F7 saja | Tidak ada H4 — lulus |
-| K tanpa H | F13 saja | K2 terbentuk, H2 belum — lulus |
-| K + fakta melengkapi | F2 + F13 | H2 — lulus |
-| Banyak diagnosis | F1, F4, F7, F11 | H1 (prioritas 1) lalu H4 (prioritas 5) — lulus |
-| Dua aturan satu H | F1, F4, F14 | H1 didukung R8 dan R9 — lulus |
-| Validasi jawaban hilang | Hanya F1 dijawab | `InputError`, 19 kode hilang — lulus |
-| Validasi tipe salah | F1 = "ya" | `InputError`, F1 invalid — lulus |
-| Rujukan sumber aturan | R1–R31 | Setiap `source` valid — lulus |
-| Kelengkapan literatur | S5–S10 | Lengkap dan terverifikasi — lulus |
-| Kinerja | Seluruh fakta "Ya" | < 1 detik (aktual < 1 ms) — lulus |
-
-### 5.4 Pengujian API dan Berkas Statis
-
-| Pengujian | Hasil |
+| Kategori | Jumlah |
 | --- | --- |
-| `GET /api/knowledge` | 200, 20 fakta, 31 aturan, 9 sumber, spesifikasi `met` |
-| `GET /api/health` | 200, `status: ok`, `rules: 31` |
-| `GET /` | 200, HTML "BluetoothCare" |
-| Aset statis | `/styles.css`, `/app.js`, `/favicon.svg` → 200 |
-| `POST /api/diagnose` valid | 200, H1, R1/R9, 20 jawaban |
-| `POST /api/diagnose` F7 | 200, inconclusive |
-| Jawaban hilang | 400, `missing` menyebut kode |
-| JSON rusak / body kosong | 400 |
-| Endpoint tidak dikenal | 404 JSON |
-| `OPTIONS /api/diagnose` | 204, header `Allow` |
-| Log konsultasi | Dibuat; hanya gejala/hasil/aturan; tanpa data pribadi |
+| Skenario diuji | 13 |
+| Skenario sesuai harapan | 13 |
+| Skenario tidak sesuai | 0 |
+| Diagnosis akhir yang dihasilkan | 12 skenario |
+| Kasus inconclusive yang diharapkan | 1 skenario |
+| **Tingkat kesesuaian** | **100%** |
 
-### 5.5 Pengujian Antarmuka (Browser)
+Angka **100%** menunjukkan konsistensi internal antara basis aturan, mesin inferensi, dan skenario yang dirancang. Angka ini bukan ukuran akurasi diagnosis di dunia nyata, karena skenario disusun oleh penyusun sistem dan jawaban fakta diberikan secara terkontrol.
 
-- [x] Beranda tampil di desktop dan ponsel; tombol Mulai membuka form.
-- [x] Form menampilkan 20 pertanyaan dalam 3 kelompok; progres berubah.
-- [x] Submit kosong ditolak dan menandai pertanyaan.
-- [x] Skenario F1 + F14 menghasilkan H1, saran, dan jejak 2 iterasi.
-- [x] Fasilitas penjelasan menampilkan R1 → K1 dan R9 → H1.
-- [x] Skenario F7 menampilkan "Belum dapat disimpulkan" + saran baterai.
-- [x] Konsultasi ulang mengosongkan form dan hasil.
-- [x] Tab basis pengetahuan menampilkan 20 fakta, 31 aturan, 19 kesimpulan, 13 skenario, 9 sumber.
-- [x] Tabel aturan terkelompok menurut kesimpulan.
-- [x] Unduh `.txt` dan Cetak/PDF berfungsi.
-- [x] Menu seluler buka/tutup dan navigasi hash berfungsi.
-- [x] Muat ulang di `#hasil` mempertahankan hasil.
+---
 
-**Hasil:** 21 pemeriksaan browser lulus, tanpa error runtime JavaScript. Pengujian DOM (jsdom) terpisah juga lulus.
+### 5.4 Evaluasi
 
-### 5.6 Pemenuhan Spesifikasi Minimum
+#### 5.4.1 Kelebihan
 
-| Aspek | Target | Capaian | Status |
-| --- | --- | --- | --- |
-| Fakta | 10+ | 20 | Terpenuhi |
-| Diagnosis akhir | 5+ | 10 | Terpenuhi |
-| Kesimpulan antara | 3+ | 9 | Terpenuhi |
-| Aturan produksi | 15+ | 31 | Terpenuhi |
-| Skenario uji | 5+ | 13 | Terpenuhi |
-| Operator AND/OR | Wajib | Banyak aturan | Terpenuhi |
+1. **Penalaran dapat ditelusuri** — setiap diagnosis disertai aturan, fakta, dan urutan iterasi yang membentuknya.
+2. **Forward chaining berjalan sesuai rancangan** — fakta memicu kesimpulan antara, lalu kesimpulan antara bersama fakta lain memicu diagnosis akhir.
+3. **Beberapa aturan dapat mendukung kesimpulan yang sama** — cakupan kombinasi gejala lebih luas tanpa menggandakan kesimpulan di memori kerja.
+4. **Prioritas tidak menghapus diagnosis lain** — semua diagnosis yang relevan tetap ditampilkan berurutan.
+5. **Kondisi tidak lengkap ditangani jujur** — sistem memilih `inconclusive` daripada memaksakan diagnosis yang tidak didukung premis lengkap.
+6. **Setiap aturan memiliki sumber** — keputusan dapat ditelusuri hingga dokumentasi vendor, standar, atau literatur ilmiah.
 
-### 5.7 Evaluasi dan Pembahasan
+#### 5.4.2 Keterbatasan
 
-**Kelebihan:**
+1. **Skenario disusun bersama aturan** — keberhasilan 13/13 berpotensi menunjukkan konsistensi internal, bukan validitas eksternal.
+2. **Tidak ada validasi pakar** — aturan divalidasi melalui sumber dan konsistensi basis pengetahuan, bukan penilaian teknisi.
+3. **Tidak ada pengujian lapangan** — sistem belum diuji pada perangkat Bluetooth nyata dalam jumlah kasus yang memadai.
+4. **Jawaban pengguna bersifat mandiri** — jawaban yang keliru akan menghasilkan diagnosis yang keliru.
+5. **Cakupan terbatas** — hanya Windows 10/11 dan perangkat audio/input Bluetooth.
+6. **Belum ada uji usability formal** — kemudahan penggunaan baru dinilai secara kualitatif.
 
-1. Basis pengetahuan terpisah dan tervalidasi otomatis, sehingga mudah diperluas.
-2. Setiap aturan menunjuk sumber, sehingga keputusan dapat dipertanggungjawabkan.
-3. Fasilitas penjelasan menunjukkan alasan dan urutan iterasi, bukan sekadar hasil.
-4. Satu kesimpulan dapat didukung beberapa aturan, sehingga cakupan kombinasi gejala lebih luas.
-5. Kesimpulan duplikat ditangani sebagai himpunan, sehingga tidak terjadi pengulangan yang salah.
+#### 5.4.3 Implikasi
 
-**Keterbatasan:**
+Hasil pengujian menunjukkan bahwa sistem layak digunakan sebagai **alat bantu diagnosis awal yang dapat dijelaskan**, bukan pengganti pemeriksaan teknisi. Kekuatan utama sistem terletak pada keterlacakan aturan dan kejelasan alasan, bukan pada klaim akurasi statistik.
 
-1. Sistem tidak belajar dari pengguna (belum ada basis pengetahuan dinamis).
-2. Diagnosis bergantung pada ketepatan jawaban pengguna.
-3. Cakupan terbatas pada Windows 10/11 dan gangguan konektivitas Bluetooth.
-4. Sumber S2 (manual perangkat) belum diisi identitas lengkap.
-5. Tidak ada wawancara pakar; validasi aturan bersandar pada sumber literatur/standar dan pemeriksaan konsistensi internal.
-6. Belum ada autentikasi untuk versi online.
-
-**Rencana pengembangan:**
-
-1. Menambah bobot keyakinan (certainty factor) pada tiap aturan.
-2. Menambah basis kasus (case-based reasoning) untuk pengalaman perbaikan nyata.
-3. Menambah dukungan sistem operasi lain.
-4. Menyediakan antarmuka pengelolaan basis pengetahuan.
+Pengembangan berikutnya sebaiknya menambah variasi skenario, melakukan pengujian lapangan, dan menilai kejelasan pertanyaan bersama calon pengguna. Validasi tambahan juga dapat dilakukan dengan memperluas rujukan literatur dan standar, tanpa perlu mengubah arsitektur sistem.
 
 ---
 
