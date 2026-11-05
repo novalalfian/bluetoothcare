@@ -125,7 +125,7 @@ Graf ini juga dapat diperiksa pada data `rules` dan pohon `derivation` di halama
 - [x] Basis aturan JSON versi 2.2
 - [x] 13 skenario uji otomatis
 - [x] Dokumentasi teknis
-- [ ] NIM/nama pada `meta.author` dan halaman Tentang
+- [ ] NIM/nama pada `meta.author`
 - [x] Identitas lengkap sumber S2 (merek/model manual)
 - [ ] Laporan PDF `NIM_NamaLengkap_UTS_SistemPakar.pdf`
 - [ ] Video demonstrasi maksimal 5 menit

@@ -2707,32 +2707,6 @@ code {
   gap: 16px;
 }
 
-.info-list {
-  display: grid;
-  gap: 11px;
-  margin: 0;
-}
-
-.info-list div {
-  display: grid;
-  gap: 1px;
-}
-
-.info-list dt {
-  font-size: 0.64rem;
-  font-weight: 750;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.info-list dd {
-  margin: 0;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--ink);
-}
-
 /* --------------------------------------------------------------------------
    Footer, toast, misc
    -------------------------------------------------------------------------- */

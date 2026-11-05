@@ -394,9 +394,8 @@ Kode inferensi tidak perlu diubah (FR-04). Jika menambah fakta, form, progres, d
 
 ### Sebelum pengumpulan tugas
 
-- Isi `meta.author` pada `knowledge_base.json` dan halaman Tentang dengan **NIM + nama**.
+- Isi `meta.author` pada `knowledge_base.json` dengan **NIM + nama**.
 - Seluruh sumber **S1, S2, S4–S10** sudah terverifikasi dan siap dikutip di laporan. S2 memakai manual **Sony WH-1000XM4** dan **Logitech K380**. Wawancara pakar tidak dilakukan, sehingga S3 dihapus dan validasi aturan bersandar pada validasi silang antarsumber serta pemeriksaan konsistensi basis pengetahuan.
-- Ganti placeholder `(isi NIM dan nama)` pada `static/index.html` bila diperlukan.
 - Simpan versi awal dan akhir basis aturan sebagai bukti proses.
 - Cantumkan pernyataan penggunaan AI pada laporan akhir.
 
